@@ -1,4 +1,4 @@
-package main.java.moksiakova;
+package main.java.moksiakova.lessons.lesson1;
 
 public class Main {
     public static void main(String[] args){
