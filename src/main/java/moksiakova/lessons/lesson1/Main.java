@@ -4,42 +4,14 @@ public class Main {
     public static void main(String[] args){
         System.out.println("Hello, world!");
 
-        String checkLength = "checkLength";
-        System.out.printf("1. length \"%s\" - %d\n\n",
-                checkLength,
-                checkLength.length());
-
-        String string1 = "string1";
-        String string2 = "String1";
-        String string3 = "string3";
-        System.out.printf("2.1. '%s' and '%s' is equals? %s.\n\n",
-                string1, string2, string1.equalsIgnoreCase(string2));
-        System.out.printf("2.2. '%s' and '%s' is equals? %s. \n\n",
-                string1, string3, string1.equalsIgnoreCase(string3));
-
-        String newString = new String("StringToLiteral").intern();
-
-        String stringToArray = "stringToArray";
-        char[] charArrayFromString = stringToArray.toCharArray();
-
-        String stringToByte = "stringToArray";
-        byte[] byteArrayFromString = stringToByte.getBytes();
-
-        String stringToUpperCase = "stringToUpperCase";
-        System.out.printf("6. \"%s\" in Upper Case \"%s\" \n",
-                stringToUpperCase,
-                stringToUpperCase.toUpperCase()
-        );
-
-        String findA = "I like apple!";
-        System.out.printf("7. Char \"a\" have first position in %d char in sentence \"%s\"\n",
-                findA.indexOf("a")+1,
-                findA);
-
-        String findALast = "I like apple and banana!";
-        System.out.printf("8. Char \"a\" have last position in %d char in sentence \"%s\"\n",
-                findALast.lastIndexOf("a")+1,
-                findALast);
+        WorkWithString work = new WorkWithString();
+        work.checkLength("bla-bla-bla");
+        work.equalsString("example","Example");
+        char[] charArrayFromString = work.getCharArrayFromString("stringToArray");
+        byte[] byteArrayFromString = work.getByteArrayFromString("stringToArray");
+        work.stringToUpperCase("stringToUpperCase");
+        int firstIndex = work.findFirstPositionInString("I like apple!","a");
+        int lastIndex = work.findLastPositionInString("I like apple and banana!","a");
 
         String stringWithSun = "sun shine";
         String stringWithoutSun = "sweet";
