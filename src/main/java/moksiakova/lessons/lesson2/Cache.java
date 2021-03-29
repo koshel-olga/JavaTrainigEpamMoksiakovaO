@@ -61,6 +61,7 @@ public class Cache<T> {
             this.moveArrayToLeft(0);
             this.cache[this.capacity-1] = addElement;
         }
+        System.out.println("add element "+element.toString()+" to cache");
     }
 
     /**
@@ -75,6 +76,7 @@ public class Cache<T> {
             }
         }
         this.cache[this.capacity-1] = null;
+        System.out.println("delete element "+element.toString()+" from cache\n");
     }
 
     /**
