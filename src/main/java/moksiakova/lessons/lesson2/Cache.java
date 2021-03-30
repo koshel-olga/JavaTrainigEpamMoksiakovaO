@@ -23,7 +23,7 @@ public class Cache<T> {
      * */
     public boolean isPresent(T element) {
         for(int i=0; i<this.capacity; i++) {
-            if ((this.cache[i] != null) && (this.cache[i].getElement().equals(element))) {
+            if ( this.cache[i] != null && this.cache[i].getElement().equals(element) ) {
                 return true;
             }
         }
@@ -37,7 +37,7 @@ public class Cache<T> {
      * */
     public boolean isPresent(int index) {
         for(int i=0; i<this.capacity; i++) {
-            if ((this.cache[i] != null) && (this.cache[i].getIndex() == index)) {
+            if ( this.cache[i] != null && this.cache[i].getIndex() == index ) {
                 return true;
             }
         }
@@ -53,15 +53,15 @@ public class Cache<T> {
         CacheElement addElement = new CacheElement(element,index);
         int freeIndex = -1;
         for(int i=0; i<this.capacity; i++) {
-            if (this.cache[i] == null) { freeIndex = i; break;}
+            if (this.cache[i] == null) {
+                this.cache[i] = addElement;
+                System.out.println("add element "+element.toString()+" to cache\n");
+                return;
+            }
         }
-        if (freeIndex > 0) {
-            this.cache[freeIndex] = addElement;
-        } else {
-            this.moveArrayToLeft(0);
-            this.cache[this.capacity-1] = addElement;
-        }
-        System.out.println("add element "+element.toString()+" to cache");
+        this.moveArrayToLeft(0);
+        this.cache[this.capacity-1] = addElement;
+        System.out.println("add element "+element.toString()+" to cache\n");
     }
 
     /**
@@ -70,7 +70,7 @@ public class Cache<T> {
      * */
     public void delete(T element) {
         for( int i=0; i<this.capacity; i++) {
-            if (this.cache[i].getElement().equals(element)) {
+            if ( this.cache[i].getElement().equals(element) ) {
                 this.moveArrayToLeft(i);
                 break;
             }
@@ -86,8 +86,8 @@ public class Cache<T> {
      * */
     public T get(int index) {
         for( int i=0; i<this.capacity; i++) {
-            if (this.cache[i] == null) {return null;}
-            if (this.cache[i].getIndex() == index) {
+            if ( this.cache[i] == null ) { return null; }
+            if ( this.cache[i].getIndex() == index ) {
                 T element = (T) this.cache[i].getElement();
                 this.moveArrayToLeft(i);
                 this.add(element, index);
@@ -100,14 +100,16 @@ public class Cache<T> {
     /**
      * Clear cache. */
     public void clear() {
-        this.cache = new CacheElement[capacity];
+        for( int i=0; i<this.capacity; i++) {
+            this.cache[i] = null;
+        }
     }
 
     /**
      * Move elements of array of cache to left.
      * @param indexFrom index of begin to move. */
     private void moveArrayToLeft(int indexFrom) {
-        for(int i=indexFrom; i<this.capacity-1; i++) {
+        for( int i=indexFrom; i<this.capacity-1; i++ ) {
             this.cache[i] = this.cache[i+1];
         }
     }

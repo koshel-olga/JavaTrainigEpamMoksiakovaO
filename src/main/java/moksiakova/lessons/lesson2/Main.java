@@ -36,12 +36,8 @@ public class Main {
         storage.add("string9");
         storage.add("string10");
         storage.add("string11");
-        System.out.println(storage.getLastIndex());
-        System.out.println(storage.getCapacity());
 
         storage.delete();
-        System.out.println(storage.getLastIndex());
-        System.out.println(storage.getCapacity());
 
         String elementLast = storage.getLast();
         System.out.println("storage.getLast() = " + elementLast.toString());
@@ -50,8 +46,6 @@ public class Main {
         System.out.println("storage.get(0) = " + elementByIndex.toString());
 
         storage.clear();
-        System.out.println(storage.getLastIndex());
-        System.out.println(storage.getCapacity());
 
         System.out.println("String to set breakpoint");
     }

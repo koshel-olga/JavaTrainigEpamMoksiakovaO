@@ -31,14 +31,6 @@ public class Storage<T> {
         }
     }
 
-    public int getLastIndex() {
-        return lastIndex;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
     /**
      * Add element in storage.
      * @param element element type of T. */
@@ -54,8 +46,8 @@ public class Storage<T> {
      * Delete last element from storage and delete this element from cache.
      */
     public void delete() {
-        T lastElement = this.getLast();
         if (this.lastIndex > 0) {
+            T lastElement = this.getLast();
             if (this.cache.isPresent(lastElement)) {
                 this.cache.delete(lastElement);
             }
@@ -69,6 +61,9 @@ public class Storage<T> {
     public void clear() {
         this.cache.clear();
         this.storage = new Objects[this.capacity];
+        for( int i=0; i<this.capacity; i++) {
+            this.storage[i] = null;
+        }
         this.lastIndex = 0;
     }
 
@@ -90,9 +85,8 @@ public class Storage<T> {
             return this.cache.get(index);
         }
         if (index < this.capacity) {
-            T element = (T) this.storage[index];
-            this.cache.add(element, index);
-            return element;
+            this.cache.add((T) this.storage[index], index);
+            return (T) this.storage[index];
         }
         throw new Exception("Index "+index+"out of range.");
     }
