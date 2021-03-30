@@ -60,7 +60,6 @@ public class Storage<T> {
     /** Clear cache and storage. */
     public void clear() {
         this.cache.clear();
-        this.storage = new Objects[this.capacity];
         for( int i=0; i<this.capacity; i++) {
             this.storage[i] = null;
         }
@@ -79,7 +78,7 @@ public class Storage<T> {
      * Get element from storage by index.
      * @param index the index of the element in the array. */
     @SuppressWarnings("unchecked")
-    public T get(int index) throws Exception {
+    public T get(int index) {
         if (this.cache.isPresent(index)) {
             System.out.println("get element from cache\n");
             return this.cache.get(index);
@@ -88,7 +87,7 @@ public class Storage<T> {
             this.cache.add((T) this.storage[index], index);
             return (T) this.storage[index];
         }
-        throw new Exception("Index "+index+"out of range.");
+        return null;
     }
 
     /**

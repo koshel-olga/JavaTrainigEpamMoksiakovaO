@@ -11,7 +11,7 @@ public class Cache<T> {
 
     /** Constructor.
      * @param capacity size of array cache.*/
-    Cache(int capacity) {
+    public Cache(int capacity) {
         this.cache = new CacheElement[capacity];
         this.capacity = capacity;
     }
@@ -51,7 +51,6 @@ public class Cache<T> {
      * */
     void add(T element, int index) {
         CacheElement addElement = new CacheElement(element,index);
-        int freeIndex = -1;
         for(int i=0; i<this.capacity; i++) {
             if (this.cache[i] == null) {
                 this.cache[i] = addElement;
@@ -72,11 +71,11 @@ public class Cache<T> {
         for( int i=0; i<this.capacity; i++) {
             if ( this.cache[i].getElement().equals(element) ) {
                 this.moveArrayToLeft(i);
+                this.cache[this.capacity-1] = null;
+                System.out.println("delete element "+element.toString()+" from cache\n");
                 break;
             }
         }
-        this.cache[this.capacity-1] = null;
-        System.out.println("delete element "+element.toString()+" from cache\n");
     }
 
     /**
