@@ -14,7 +14,7 @@ public class CacheElement<T> {
 
     /**
      * Constructor. */
-    CacheElement(T element, int index) {
+    public CacheElement(T element, int index) {
         this.element = element;
         this.index = index;
     }
@@ -40,8 +40,8 @@ public class CacheElement<T> {
             return false;
         }
         CacheElement<T> elementObj = (CacheElement<T>) obj;
-        return ((index == elementObj.getIndex())) &&
-                (((element != null) && (element.equals(elementObj.getElement()))) || (element == elementObj.element));
+        return ( index == elementObj.getIndex() ) &&
+                ( ( element != null && element.equals(elementObj.getElement())) || (element == elementObj.element) );
     }
 
     @Override
