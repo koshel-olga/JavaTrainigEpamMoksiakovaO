@@ -1,11 +1,6 @@
 package main.java.moksiakova.lessons.lesson3;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -14,16 +9,37 @@ public class Main {
         Address addressHouse = new Address("Ягодное","Заветная", "27", null);
         Address addressTltOther = new Address("Тольятти","улица Юбилейная", "27",135);
 
-        Human human1 = new Human("Иванов Иван Иванович", 35, addressTlt);
+        Human human1 = new Human();
+        human1.setName("Иванов Иван Иванович");
+        human1.setAge(35);
+        human1.setAddress(addressTlt);
         Human human2 = human1;
-        Human human3 = new Human("Петров Петр Петрович", 12, addressMoscow);
+        Human human3 = new Human();
+        human3.setName("Петров Петр Петрович");
+        human3.setAge(12);
+        human3.setAddress(addressMoscow);
         Human human4 = human3;
-        Human human5 = new Human("Калугина Мария Степановна", 67, addressHouse);
+        Human human5 = new Human();
+        human5.setName("Калугина Мария Степановна");
+        human5.setAge(67);
+        human5.setAddress(addressHouse);
         Human human6 = human5;
-        Human human7 = new Human("Попова Ксения Сергеевна", 8, addressTltOther);
-        Human human8 = new Human("Петрова Мария Константиновна", 44, addressMoscow);
-        Human human9 = new Human("Петров Петр Андреевич", 46, addressMoscow);
-        Human human10 = new Human("Калугин Сергей Алексеевич", 60, addressHouse);
+        Human human7 = new Human();
+        human7.setName("Попова Ксения Сергеевна");
+        human7.setAge(8);
+        human7.setAddress(addressTltOther);
+        Human human8 = new Human();
+        human8.setName("Петрова Мария Константиновна");
+        human8.setAge(44);
+        human8.setAddress(addressMoscow);
+        Human human9 = new Human();
+        human9.setName("Петров Петр Андреевич");
+        human9.setAge(46);
+        human9.setAddress(addressMoscow);
+        Human human10 = new Human();
+        human10.setName("Калугин Сергей Алексеевич");
+        human10.setAge(60);
+        human10.setAddress(addressHouse);
 
         ArrayList<Human> humanArray = new ArrayList<>();
         humanArray.add(human1);
@@ -42,22 +58,30 @@ public class Main {
         Set<Human> duplicateHuman = lesson3.findDuplicate(humanArray);
         System.out.println(duplicateHuman);
 
-        Set<Human> humanSet = new HashSet<>();
-        humanSet.addAll(humanArray);
+        Set<Human> humanSet = new HashSet<>(humanArray);
         System.out.println(humanSet);
 
-        Comparator humanNameComparator = new HumanNameComparator();
+        Comparator<Human> humanNameComparator = new HumanNameComparator();
         humanArray.sort(humanNameComparator);
         System.out.println(humanArray);
-        Comparator humanAddressComparator = new HumanAddressComparator();
+        Comparator<Human> humanAddressComparator = new HumanAddressComparator();
         humanArray.sort(humanAddressComparator);
         System.out.println(humanArray);
-        Comparator humanAgeComparator = new HumanAgeComparator();
+        Comparator<Human> humanAgeComparator = new HumanAgeComparator();
         humanArray.sort(humanAgeComparator);
         System.out.println(humanArray);
 
-
         User user = new User("Moksiakova Olga Yurievna","ADMIN");
         lesson3.hiUser(user);
+
+        HashMap<Integer,User> collection = new HashMap<>();
+        collection.put(5, new User("Roman", "USER"));
+        collection.put(105, new User("Stepa", "MODERATOR"));
+        collection.put(89, new User("Alex", "USER"));
+        collection.put(1, new User("Denis", "ADMIN"));
+
+        TreeMap<Integer,User> sortedByKeys = lesson3.sortByKey(collection);
+
+        LinkedHashMap<Integer,User> sortByValues = lesson3.sortByValue(collection);
     }
 }

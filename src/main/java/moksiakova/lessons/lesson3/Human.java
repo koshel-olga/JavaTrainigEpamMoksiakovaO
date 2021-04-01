@@ -1,19 +1,14 @@
 package main.java.moksiakova.lessons.lesson3;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
+/** Human class. */
 public class Human {
     private String name;
     private Integer age;
     private Address address;
 
-    public Human(@NotNull String name, @NotNull Integer age, Address address) throws Exception {
-        if (age < 0 ) { throw new Exception("Age is not correct"); }
-        this.name = name;
-        this.age = age;
-        this.address = address;
+    public Human() {
     }
 
     @Override
@@ -44,5 +39,21 @@ public class Human {
 
     public Address getAddress() {
         return address;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        if (age < 0) {
+            System.out.printf("Invalid age: %d", age);
+            return;
+        }
+        this.age = age;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

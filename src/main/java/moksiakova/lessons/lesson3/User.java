@@ -1,7 +1,5 @@
 package main.java.moksiakova.lessons.lesson3;
 
-import jdk.jshell.EvalException;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class User {
     /**
      * ФИО пользователя. */
-    private String name;
+    private final String name;
     /**
      * Роль пользователя. */
     private String userRole;
@@ -19,19 +17,20 @@ public class User {
     private static final Map<String, String> userRoleMap;
 
     static {
-        Map<String, String> map = new ConcurrentHashMap<String, String>();
+        Map<String, String> map = new ConcurrentHashMap<>();
         map.put("ADMIN","Администратор системы. Может делать все, что захочет.");
         map.put("USER","Пользователь. Обычный пользователь.");
-        map.put("MODERATOR ","Модератор. Проверяет материал на соответствие требованиям.");
+        map.put("MODERATOR","Модератор. Проверяет материал на соответствие требованиям.");
         userRoleMap = Collections.unmodifiableMap(map);
     }
 
-    public User(String name, String userRole) throws Exception {
-        if (!userRoleMap.containsKey(userRole)) {
-            throw new Exception("Invalid role: "+userRole);
-        }
+    public User(String name, String userRole) {
         this.name = name;
-        this.userRole = userRole;
+        try {
+            this.userRole = userRoleMap.get(userRole);
+        } catch (Exception e) {
+            System.out.printf("Invalid role %d", userRole);
+        }
     }
 
     public String getName() {
