@@ -49,9 +49,10 @@ public class Lesson3 {
      * @param collection <Integer, {@link User}>.
      * @return sorted collection by values. */
     public LinkedHashMap<Integer, User> sortByValue(HashMap<Integer, User> collection) {
-        List<User> listValue = new ArrayList<>(collection.values());
         LinkedHashMap<Integer, User> sortedCollection = new LinkedHashMap<>();
+        List<User> listValue = new ArrayList<>(collection.values());
         listValue.sort(new UserNameComparator());
+
         for(User userValue: listValue) {
             for(Map.Entry<Integer,User> entry: collection.entrySet()) {
                 if ( userValue.equals(entry.getValue()) ){

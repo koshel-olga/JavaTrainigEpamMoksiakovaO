@@ -2,6 +2,7 @@ package main.java.moksiakova.lessons.lesson3;
 
 import java.util.Comparator;
 
+/** Компаратор для сортировка класса {@link Human} по возрасту. */
 public class HumanAgeComparator implements Comparator<Human> {
 
     @Override

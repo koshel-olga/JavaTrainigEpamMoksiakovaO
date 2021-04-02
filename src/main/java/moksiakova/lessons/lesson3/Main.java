@@ -3,7 +3,7 @@ package main.java.moksiakova.lessons.lesson3;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Address addressTlt = new Address("Тольятти","Южное шоссе", "27",135);
         Address addressMoscow = new Address("Москва","Южное шоссе", "27",135);
         Address addressHouse = new Address("Ягодное","Заветная", "27", null);
@@ -83,5 +83,9 @@ public class Main {
         TreeMap<Integer,User> sortedByKeys = lesson3.sortByKey(collection);
 
         LinkedHashMap<Integer,User> sortByValues = lesson3.sortByValue(collection);
+
+        Human errorAge = new Human();
+        errorAge.setAge(-23);
+        User errorUser = new User("Oleg","sdfs");
     }
 }

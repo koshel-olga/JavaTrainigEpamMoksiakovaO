@@ -26,10 +26,10 @@ public class User {
 
     public User(String name, String userRole) {
         this.name = name;
-        try {
-            this.userRole = userRoleMap.get(userRole);
-        } catch (Exception e) {
-            System.out.printf("Invalid role %d", userRole);
+        if (userRoleMap.containsKey(userRole)) { this.userRole = userRole; }
+        else {
+            System.out.println("Invalid role "+userRole+". Set role=\"USER\" to "+name);
+            this.userRole = "USER";
         }
     }
 
@@ -44,5 +44,4 @@ public class User {
     public String getUserRoleDescription() {
         return userRoleMap.get(this.userRole);
     }
-
 }
