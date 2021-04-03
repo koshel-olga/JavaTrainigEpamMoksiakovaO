@@ -14,16 +14,15 @@ public class Lesson3 {
      * */
     public Set<Human> findDuplicate(Collection<Human> collection) {
         Set<Human> setHumans = new HashSet<>();
-        return collection.stream()
-                .filter(human -> {
-                    if (!setHumans.contains(human)) {
-                        setHumans.add(human);
-                    } else {
-                        return true;
-                    }
-                    return false;
-                })
-                .collect(Collectors.toSet());
+        Set<Human> duplicate = new HashSet<>();
+        for(Human human : collection) {
+            if (setHumans.contains(human)) {
+                duplicate.add(human);
+            } else {
+                setHumans.add(human);
+            }
+        }
+        return duplicate;
     }
 
     /** Print letter for user.
@@ -50,18 +49,11 @@ public class Lesson3 {
      * @return sorted collection by values. */
     public LinkedHashMap<Integer, User> sortByValue(HashMap<Integer, User> collection) {
         LinkedHashMap<Integer, User> sortedCollection = new LinkedHashMap<>();
-        List<User> listValue = new ArrayList<>(collection.values());
-        listValue.sort(new UserNameComparator());
-
-        for(User userValue: listValue) {
-            for(Map.Entry<Integer,User> entry: collection.entrySet()) {
-                if ( userValue.equals(entry.getValue()) ){
-                    sortedCollection.put(entry.getKey(), entry.getValue());
-                    collection.remove(entry.getKey(), entry.getValue());
-                    break;
-                }
-            }
-        }
+        Comparator<Map.Entry<Integer, User>> comparatorValue =
+                Map.Entry.comparingByValue(new UserNameComparator());
+        List<Map.Entry<Integer, User>> listEntry = new ArrayList<>(collection.entrySet());
+        listEntry.sort(comparatorValue);
+        listEntry.forEach(entry -> sortedCollection.put(entry.getKey(), entry.getValue()));
         return sortedCollection;
     }
 }
