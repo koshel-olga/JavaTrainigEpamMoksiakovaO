@@ -1,4 +1,4 @@
-package main.java.moksiakova.lessons.lesson2;
+package moksiakova.lessons.lesson2;
 
 /**
  * Parametrized class Cache. */
@@ -12,8 +12,10 @@ public class Cache<T> {
     /** Constructor.
      * @param capacity size of array cache.*/
     public Cache(int capacity) {
-        this.cache = new CacheElement[capacity];
+        if ( capacity < 0 )
+            throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);
         this.capacity = capacity;
+        this.cache = new CacheElement[capacity];
     }
 
     /**
@@ -105,9 +107,19 @@ public class Cache<T> {
     }
 
     /**
+     * Check index exist in cache.
+     * @param index .
+     * @throws IndexOutOfBoundsException if index is out of range. */
+    public void checkIndexInArray(int index) {
+        if ( (index > this.capacity) || (index < 0) )
+            throw new IndexOutOfBoundsException("Index "+index+" out of range cache array - "+this.capacity);
+    }
+
+    /**
      * Move elements of array of cache to left.
      * @param indexFrom index of begin to move. */
     private void moveArrayToLeft(int indexFrom) {
+        this.checkIndexInArray(indexFrom);
         for( int i=indexFrom; i<this.capacity-1; i++ ) {
             this.cache[i] = this.cache[i+1];
         }

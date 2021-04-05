@@ -1,8 +1,14 @@
-package main.java.moksiakova.lessons.lesson2;
+package moksiakova.lessons.lesson2;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        Cache<String> cacheString = new Cache<>(3);
+    public static void main(String[] args) {
+        Cache<String> cacheString;
+        try {
+            cacheString = new Cache<>(-3);
+        } catch (IllegalCacheArgumentException exception) {
+            System.out.println(exception.getMessage());
+            cacheString = new Cache<>(Math.abs(-3));
+        }
 
         cacheString.add("first",3);
         cacheString.add("second",1);
