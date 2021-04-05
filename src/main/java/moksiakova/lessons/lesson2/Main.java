@@ -1,15 +1,17 @@
 package moksiakova.lessons.lesson2;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Main {
     public static void main(String[] args) {
         Cache<String> cacheString;
         try {
             cacheString = new Cache<>(-3);
         } catch (IllegalCacheArgumentException exception) {
-            System.out.println(exception.getMessage());
+            log.error(exception.getMessage());
             cacheString = new Cache<>(Math.abs(-3));
         }
-
         cacheString.add("first",3);
         cacheString.add("second",1);
         cacheString.add("third",4);
@@ -48,8 +50,13 @@ public class Main {
         String elementLast = storage.getLast();
         System.out.println("storage.getLast() = " + elementLast.toString());
 
-        String elementByIndex = storage.get(0);
-        System.out.println("storage.get(0) = " + elementByIndex.toString());
+        try {
+            String elementByIndex = storage.get(345);
+            System.out.println("storage.get(0) = " + elementByIndex.toString());
+        } catch (StorageIndexOutOfRange e) {
+            log.error(e.getMessage());
+        }
+
 
         storage.clear();
 

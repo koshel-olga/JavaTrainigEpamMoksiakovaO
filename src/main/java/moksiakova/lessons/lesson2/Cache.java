@@ -1,7 +1,10 @@
 package moksiakova.lessons.lesson2;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Parametrized class Cache. */
+@Slf4j
 public class Cache<T> {
     /**
      * Elements in cache.*/
@@ -9,11 +12,13 @@ public class Cache<T> {
     /** Size of array cache. */
     private int capacity;
 
+
     /** Constructor.
      * @param capacity size of array cache.*/
     public Cache(int capacity) {
-        if ( capacity < 0 )
-            throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);
+        if ( capacity < 0 ) {
+            log.error("Недопустимый аргумент capacity "+ capacity);
+            throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);}
         this.capacity = capacity;
         this.cache = new CacheElement[capacity];
     }
@@ -56,13 +61,13 @@ public class Cache<T> {
         for(int i=0; i<this.capacity; i++) {
             if (this.cache[i] == null) {
                 this.cache[i] = addElement;
-                System.out.println("add element "+element.toString()+" to cache\n");
+                log.info("add element "+element.toString()+" to cache\n");
                 return;
             }
         }
         this.moveArrayToLeft(0);
         this.cache[this.capacity-1] = addElement;
-        System.out.println("add element "+element.toString()+" to cache\n");
+        log.info("add element "+element.toString()+" to cache\n");
     }
 
     /**
@@ -74,7 +79,7 @@ public class Cache<T> {
             if ( this.cache[i].getElement().equals(element) ) {
                 this.moveArrayToLeft(i);
                 this.cache[this.capacity-1] = null;
-                System.out.println("delete element "+element.toString()+" from cache\n");
+                log.info("delete element "+element.toString()+" from cache\n");
                 break;
             }
         }
@@ -107,19 +112,9 @@ public class Cache<T> {
     }
 
     /**
-     * Check index exist in cache.
-     * @param index .
-     * @throws IndexOutOfBoundsException if index is out of range. */
-    public void checkIndexInArray(int index) {
-        if ( (index > this.capacity) || (index < 0) )
-            throw new IndexOutOfBoundsException("Index "+index+" out of range cache array - "+this.capacity);
-    }
-
-    /**
      * Move elements of array of cache to left.
      * @param indexFrom index of begin to move. */
     private void moveArrayToLeft(int indexFrom) {
-        this.checkIndexInArray(indexFrom);
         for( int i=indexFrom; i<this.capacity-1; i++ ) {
             this.cache[i] = this.cache[i+1];
         }
