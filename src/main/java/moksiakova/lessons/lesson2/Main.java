@@ -57,7 +57,6 @@ public class Main {
             log.error(e.getMessage());
         }
 
-
         storage.clear();
 
         System.out.println("String to set breakpoint");

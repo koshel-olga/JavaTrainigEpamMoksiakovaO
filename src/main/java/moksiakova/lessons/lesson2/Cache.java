@@ -17,7 +17,7 @@ public class Cache<T> {
      * @param capacity size of array cache.*/
     public Cache(int capacity) {
         if ( capacity < 0 ) {
-            log.error("Недопустимый аргумент capacity "+ capacity);
+            log.error("Недопустимый аргумент capacity {}.",capacity);
             throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);}
         this.capacity = capacity;
         this.cache = new CacheElement[capacity];
@@ -61,13 +61,13 @@ public class Cache<T> {
         for(int i=0; i<this.capacity; i++) {
             if (this.cache[i] == null) {
                 this.cache[i] = addElement;
-                log.info("add element "+element.toString()+" to cache\n");
+                log.info("add element {} to cache\n",element.toString());
                 return;
             }
         }
         this.moveArrayToLeft(0);
         this.cache[this.capacity-1] = addElement;
-        log.info("add element "+element.toString()+" to cache\n");
+        log.info("add element {} to cache\n",element.toString());
     }
 
     /**
@@ -79,7 +79,7 @@ public class Cache<T> {
             if ( this.cache[i].getElement().equals(element) ) {
                 this.moveArrayToLeft(i);
                 this.cache[this.capacity-1] = null;
-                log.info("delete element "+element.toString()+" from cache\n");
+                log.info("delete element {} from cache\n",element.toString());
                 break;
             }
         }

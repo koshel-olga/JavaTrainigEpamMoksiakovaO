@@ -147,3 +147,26 @@
 
 2021-04-06 02:43:50 - add element false to cache
 
+2021-04-07 00:43:48 - Недопустимый аргумент capacity -3.
+2021-04-07 00:43:48 - add element first to cache
+
+2021-04-07 00:43:48 - add element second to cache
+
+2021-04-07 00:43:48 - add element third to cache
+
+2021-04-07 00:43:48 - add element fourth to cache
+
+2021-04-07 00:43:48 - delete element fourth from cache
+
+2021-04-07 00:43:48 - add element second to cache
+
+2021-04-07 00:43:48 - add element true to cache
+
+2021-04-07 00:43:48 - add element false to cache
+
+2021-04-07 00:43:48 - add element true to cache
+
+2021-04-07 00:43:48 - delete element true from cache
+
+2021-04-07 00:43:48 - add element false to cache
+

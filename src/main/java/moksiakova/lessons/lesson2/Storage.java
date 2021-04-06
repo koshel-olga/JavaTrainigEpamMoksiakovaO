@@ -54,7 +54,7 @@ public class Storage<T> {
             if (this.cache.isPresent(lastElement)) {
                 this.cache.delete(lastElement);
             }
-            log.info("delete last index = "+this.lastIndex);
+            log.info("delete last index = {}",this.lastIndex);
             this.storage[this.lastIndex] = null;
             this.lastIndex--;
         }
@@ -90,7 +90,7 @@ public class Storage<T> {
             this.cache.add((T) this.storage[index], index);
             return (T) this.storage[index];
         } else {
-            log.error("index "+index+"out of range");
+            log.error("index {} out of range", index);
             throw new StorageIndexOutOfRange("index "+index+" out of range");
         }
     }
@@ -106,7 +106,7 @@ public class Storage<T> {
             Object[] newStorage = new Object[this.capacity];
             System.arraycopy(this.storage, 0, newStorage, 0, beginCapacity);
             this.storage = newStorage;
-            log.info("Create larger array. New length "+this.capacity);
+            log.info("Create larger array. New length {}.",this.capacity);
         }
     }
 }
