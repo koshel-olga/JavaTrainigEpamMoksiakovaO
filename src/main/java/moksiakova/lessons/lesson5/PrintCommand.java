@@ -7,17 +7,19 @@ import java.io.IOException;
 public class PrintCommand {
     Integer stringNumber;
     String fileName;
+    FileWork fileWork;
 
     public PrintCommand(Integer stringNumber, String fileName) {
         this.stringNumber = stringNumber;
         this.fileName = fileName;
+        this.fileWork = new FileWork();
     }
 
     public void printFromFile() {
         String line;
         try {
             int i = 1;
-            BufferedReader reader = FileWork.fileOpenToRead(this.fileName);
+            BufferedReader reader = this.fileWork.fileOpenToRead(this.fileName);
             while ((line = reader.readLine()) != null) {
                 if (this.stringNumber != null && this.stringNumber == i) {
                     System.out.println(line);

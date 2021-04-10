@@ -10,11 +10,13 @@ public class AddCommand {
     Integer stringNumber;
     String fileName;
     String addText;
+    FileWork fileWork;
 
     public AddCommand(Integer stringNumber, String fileName, String addText) {
         this.stringNumber = stringNumber;
         this.fileName = fileName;
         this.addText = addText;
+        this.fileWork = new FileWork();
     }
 
     public void addToFile() {
@@ -26,7 +28,7 @@ public class AddCommand {
             this.addToFileInLine();
         } else {
             try {
-                FileWork.fileWriteToEnd(this.fileName, this.addText);
+                this.fileWork.fileWriteToEnd(this.fileName, this.addText);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -34,10 +36,10 @@ public class AddCommand {
     }
 
     private void addToFileInLine() {
-        Long numLinesInFile = FileWork.getNumOfLinesInFile(this.fileName);
-        if (numLinesInFile < this.stringNumber) {
+        Long numLinesInFile = this.fileWork.getNumOfLinesInFile(this.fileName);
+        if (numLinesInFile <= this.stringNumber) {
             try {
-                BufferedWriter fileToWrite = FileWork.fileOpenToWrite(this.fileName);
+                BufferedWriter fileToWrite = this.fileWork.fileOpenToWrite(this.fileName);
                 while (numLinesInFile < this.stringNumber) {
                     fileToWrite.newLine();
                     numLinesInFile += 1;
@@ -52,8 +54,12 @@ public class AddCommand {
             try {
                 String line;
                 Integer numOfLine = 1;
-                BufferedReader fileToRead = FileWork.fileOpenToRead(this.fileName);
-                BufferedWriter tmpFile = FileWork.fileOpenToWrite("tmp.txt");
+                if (!this.fileWork.checkExistFile(this.fileName)) {
+                    this.fileWork.fileWriteToEnd(this.fileName, this.addText);
+                    return;
+                }
+                BufferedReader fileToRead = this.fileWork.fileOpenToRead(this.fileName);
+                BufferedWriter tmpFile = this.fileWork.fileOpenToWrite("tmp.txt");
                 try {
                     while ((line = fileToRead.readLine()) != null) {
                         if (numOfLine.equals(this.stringNumber)) {
@@ -68,7 +74,7 @@ public class AddCommand {
                     fileToRead.close();
                     tmpFile.close();
                 }
-                FileWork.copy("tmp.txt", this.fileName);
+                this.fileWork.copy("tmp.txt", this.fileName);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

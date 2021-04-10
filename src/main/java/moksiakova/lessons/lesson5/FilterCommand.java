@@ -31,15 +31,18 @@ public class FilterCommand {
                 this.stringNumber = null;
             }
             this.fileName = matcher.group("fileName");
-            this.addText = matcher.group("addText");
+            this.addText = matcher.group("addText").trim();
 
             switch (this.command) {
                 case("add"):
                     this.addCommand();
+                    break;
                 case("delete"):
                     this.deleteCommand();
+                    break;
                 case("print"):
                     this.printCommand();
+                    break;
             }
         }
         else {
