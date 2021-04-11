@@ -22,16 +22,20 @@ public class PrintCommandHandler implements CommandHandlerInterface {
         try {
             int i = 1;
             BufferedReader reader = FileWork.fileOpenToRead(fileName);
-            while ((line = reader.readLine()) != null) {
-                if (stringNumber != null) {
-                    if (stringNumber == i) {
+            try {
+                while ((line = reader.readLine()) != null) {
+                    if (stringNumber != null) {
+                        if (stringNumber == i) {
+                            System.out.println(line);
+                            break;
+                        }
+                    } else {
                         System.out.println(line);
-                        break;
                     }
-                } else {
-                    System.out.println(line);
+                    i++;
                 }
-                i++;
+            } finally {
+                reader.close();
             }
             reader.close();
         } catch (IOException e) {

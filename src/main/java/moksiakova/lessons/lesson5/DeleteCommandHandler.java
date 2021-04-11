@@ -26,14 +26,17 @@ public class DeleteCommandHandler implements CommandHandlerInterface {
             Integer numOfLine = 1;
             BufferedReader fileRead = FileWork.fileOpenToRead(fileName);
             BufferedWriter tmpFileDel = FileWork.fileOpenToWrite("tmpForDelete.txt");
-            while ((line = fileRead.readLine()) != null) {
-                if (!numOfLine.equals(stringNumber)) {
-                    tmpFileDel.write(line);
+            try {
+                while ((line = fileRead.readLine()) != null) {
+                    if (!numOfLine.equals(stringNumber)) {
+                        tmpFileDel.write(line);
+                    }
+                    numOfLine += 1;
                 }
-                numOfLine +=1;
+            } finally {
+                fileRead.close();
+                tmpFileDel.close();
             }
-            fileRead.close();
-            tmpFileDel.close();
             FileWork.copy("tmpForDelete.txt", fileName);
         } catch (IOException e) {
             System.out.println(e.getMessage());

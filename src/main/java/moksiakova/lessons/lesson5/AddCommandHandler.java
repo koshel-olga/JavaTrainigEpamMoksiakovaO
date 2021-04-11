@@ -42,13 +42,16 @@ public class AddCommandHandler implements CommandHandlerInterface {
         if (numLinesInFile <= stringNumber) {
             try {
                 BufferedWriter fileToWrite = FileWork.fileOpenToWrite(fileName);
-                while (numLinesInFile < stringNumber) {
-                    fileToWrite.newLine();
-                    numLinesInFile += 1;
+                try {
+                    while (numLinesInFile < stringNumber) {
+                        fileToWrite.newLine();
+                        numLinesInFile += 1;
+                    }
+                    fileToWrite.write(addText);
+                    fileToWrite.write(System.lineSeparator());
+                } finally {
+                    fileToWrite.close();
                 }
-                fileToWrite.write(addText);
-                fileToWrite.write(System.lineSeparator());
-                fileToWrite.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
