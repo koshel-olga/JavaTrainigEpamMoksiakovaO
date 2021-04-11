@@ -12,11 +12,13 @@ public class FileWork {
         return Files.exists(Path.of(fileName));
     }
 
-    public static void fileWriteToEnd(String fileName, String text) throws IOException {
-        BufferedWriter writer = FileWork.fileOpenToWrite(fileName);
+    public static void fileWriteToEnd(String fileName, String text) {
+        try (BufferedWriter writer = FileWork.fileOpenToWrite(fileName)) {
         writer.write(text);
         writer.write(System.lineSeparator());
-        writer.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static BufferedWriter fileOpenToWrite(String fileName) throws IOException {

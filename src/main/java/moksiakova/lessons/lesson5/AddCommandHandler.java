@@ -30,42 +30,31 @@ public class AddCommandHandler implements CommandHandlerInterface {
     }
 
     private void addToEndFile(String fileName, String addText) {
-        try {
-            FileWork.fileWriteToEnd(fileName, addText);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        FileWork.fileWriteToEnd(fileName, addText);
     }
 
     private void addToFileInLine(Integer stringNumber, String fileName, String addText) {
         Long numLinesInFile = FileWork.getNumOfLinesInFile(fileName)+1;
         if (numLinesInFile <= stringNumber) {
-            try {
-                BufferedWriter fileToWrite = FileWork.fileOpenToWrite(fileName);
-                try {
-                    while (numLinesInFile < stringNumber) {
-                        fileToWrite.newLine();
-                        numLinesInFile += 1;
-                    }
-                    fileToWrite.write(addText);
-                    fileToWrite.write(System.lineSeparator());
-                } finally {
-                    fileToWrite.close();
+            try (BufferedWriter fileToWrite = FileWork.fileOpenToWrite(fileName)) {
+                while (numLinesInFile < stringNumber) {
+                    fileToWrite.newLine();
+                    numLinesInFile += 1;
                 }
+                fileToWrite.write(addText);
+                fileToWrite.write(System.lineSeparator());
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else {
-            try {
-                String line;
-                Integer numOfLine = 1;
-                if (!FileWork.checkExistFile(fileName)) {
-                    FileWork.fileWriteToEnd(fileName, addText);
-                    return;
-                }
-                BufferedReader fileToRead = FileWork.fileOpenToRead(fileName);
-                BufferedWriter tmpFile = FileWork.fileOpenToWrite("tmp.txt");
-                try {
+            String line;
+            Integer numOfLine = 1;
+            if (!FileWork.checkExistFile(fileName)) {
+                FileWork.fileWriteToEnd(fileName, addText);
+                return;
+            }
+            try (BufferedReader fileToRead = FileWork.fileOpenToRead(fileName);
+                     BufferedWriter tmpFile = FileWork.fileOpenToWrite("tmp.txt")) {
                     while ((line = fileToRead.readLine()) != null) {
                         if (numOfLine.equals(stringNumber)) {
                             tmpFile.write(addText);
@@ -76,10 +65,6 @@ public class AddCommandHandler implements CommandHandlerInterface {
                         tmpFile.write(System.lineSeparator());
                         numOfLine += 1;
                     }
-                } finally {
-                    fileToRead.close();
-                    tmpFile.close();
-                }
                 FileWork.copy("tmp.txt", fileName);
             } catch (IOException e) {
                 System.out.println(e.getMessage());

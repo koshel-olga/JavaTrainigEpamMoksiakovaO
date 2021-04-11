@@ -19,25 +19,19 @@ public class PrintCommandHandler implements CommandHandlerInterface {
     @Override
     public void handle(Integer stringNumber, String fileName, String addText) {
         String line;
-        try {
-            int i = 1;
-            BufferedReader reader = FileWork.fileOpenToRead(fileName);
-            try {
-                while ((line = reader.readLine()) != null) {
-                    if (stringNumber != null) {
-                        if (stringNumber == i) {
-                            System.out.println(line);
-                            break;
-                        }
-                    } else {
+        int i = 1;
+        try (BufferedReader reader = FileWork.fileOpenToRead(fileName)) {
+            while ((line = reader.readLine()) != null) {
+                if (stringNumber != null) {
+                    if (stringNumber == i) {
                         System.out.println(line);
+                        break;
                     }
-                    i++;
+                } else {
+                    System.out.println(line);
                 }
-            } finally {
-                reader.close();
+                i++;
             }
-            reader.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
