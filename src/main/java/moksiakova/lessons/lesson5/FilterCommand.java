@@ -1,21 +1,19 @@
 package moksiakova.lessons.lesson5;
 
-import lombok.NoArgsConstructor;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@NoArgsConstructor
 public class FilterCommand {
-    /** Command from console. */
-    String command;
+    List<CommandHandlerInterface> commandHandlerList;
 
-    Integer stringNumber;
-
-    String fileName;
-
-    String addText;
-
+    public FilterCommand() {
+        commandHandlerList = new ArrayList<>();
+        commandHandlerList.add(new AddCommandHandler());
+        commandHandlerList.add(new DeleteCommandHandler());
+        commandHandlerList.add(new PrintCommandHandler());
+    }
 
     /**Check valid command from console.
      * @param inputStringCommand command from console. */
@@ -24,44 +22,23 @@ public class FilterCommand {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(inputStringCommand);
         if (matcher.find()) {
-            this.command = matcher.group("command");
+            String command = matcher.group("command");
+            Integer stringNumber = null;
             if (!matcher.group("stringNumber").isEmpty()) {
-                this.stringNumber = Integer.valueOf(matcher.group("stringNumber"));
-            } else {
-                this.stringNumber = null;
+                stringNumber = Integer.valueOf(matcher.group("stringNumber"));
             }
-            this.fileName = matcher.group("fileName");
-            this.addText = matcher.group("addText").trim();
+            String fileName = matcher.group("fileName");
+            String addText = matcher.group("addText").trim();
 
-            switch (this.command) {
-                case("add"):
-                    this.addCommand();
+            for (CommandHandlerInterface commandHandler: this.commandHandlerList ){
+                if (commandHandler.matches(command)){
+                    commandHandler.handle(stringNumber, fileName, addText);
                     break;
-                case("delete"):
-                    this.deleteCommand();
-                    break;
-                case("print"):
-                    this.printCommand();
-                    break;
+                }
             }
         }
         else {
             System.out.println("Format command is illegal. Try again.");
         }
-    }
-
-    public void addCommand() {
-        AddCommand addCommand = new AddCommand(this.stringNumber, this.fileName, this.addText);
-        addCommand.addToFile();
-    }
-
-    public void deleteCommand() {
-        DeleteCommand deleteCommand = new DeleteCommand(this.stringNumber, this.fileName);
-        deleteCommand.deleteFromFile();
-    }
-
-    public void printCommand() {
-        PrintCommand printCommand = new PrintCommand(this.stringNumber, this.fileName);
-        printCommand.printFromFile();
     }
 }

@@ -8,7 +8,7 @@ public class Main {
         FilterCommand filterCommand = new FilterCommand();
         String input = "";
         while (true) {
-            System.out.print("Enter something (Exit to quite): ");
+            System.out.print("Enter something ('q' to quite): ");
             input = scanner.nextLine();
             if (input.equalsIgnoreCase("q")) {break;}
             filterCommand.validateCommandString(input);

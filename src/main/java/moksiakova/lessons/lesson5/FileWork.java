@@ -8,18 +8,18 @@ import java.util.stream.Stream;
 
 public class FileWork {
 
-    public boolean checkExistFile(String fileName) {
+    public static boolean checkExistFile(String fileName) {
         return Files.exists(Path.of(fileName));
     }
 
-    public void fileWriteToEnd(String fileName, String text) throws IOException {
-        BufferedWriter writer = this.fileOpenToWrite(fileName);
+    public static void fileWriteToEnd(String fileName, String text) throws IOException {
+        BufferedWriter writer = FileWork.fileOpenToWrite(fileName);
         writer.write(text);
         writer.write(System.lineSeparator());
         writer.close();
     }
 
-    public BufferedWriter fileOpenToWrite(String fileName) throws IOException {
+    public static BufferedWriter fileOpenToWrite(String fileName) throws IOException {
         BufferedWriter writer;
         if (!Files.exists(Path.of(fileName))) {
             writer = new BufferedWriter(
@@ -31,14 +31,14 @@ public class FileWork {
         return writer;
     }
 
-    public BufferedReader fileOpenToRead(String fileName) throws IOException {
+    public static BufferedReader fileOpenToRead(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(
                 new FileReader(fileName)
                 );
         return reader;
     }
 
-    public Long getNumOfLinesInFile(String fileName) {
+    public static Long getNumOfLinesInFile(String fileName) {
         Long numOfLineInFile = 1L;
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
@@ -57,7 +57,7 @@ public class FileWork {
         return numOfLineInFile;
     }
 
-    public void copy(String fromFileName, String toFileName) {
+    public static void copy(String fromFileName, String toFileName) {
         try {
             Files.copy(Path.of(fromFileName), Path.of(toFileName), StandardCopyOption.REPLACE_EXISTING);
             Files.delete(Path.of(fromFileName));
