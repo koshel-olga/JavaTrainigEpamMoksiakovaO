@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS_DIR" value="logs/" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE-CACHE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGS_DIR}/Cache.log</file>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern> %d{yyyy-MM-dd HH:mm:ss} - %msg%n </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-STORAGE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOGS_DIR}/Storage.log</file>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern> %d{yyyy-MM-dd HH:mm:ss} - %msg%n </Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="moksiakova.lessons.lesson2.Cache" level="debug" additivity="false">
+        <appender-ref ref="FILE-CACHE"/>
+    </logger>
+
+    <logger name="moksiakova.lessons.lesson2.Storage" level="debug" additivity="false">
+        <appender-ref ref="FILE-STORAGE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="Main" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+</configuration>

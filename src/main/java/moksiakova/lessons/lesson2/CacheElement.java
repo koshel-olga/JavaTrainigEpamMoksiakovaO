@@ -1,4 +1,4 @@
-package main.java.moksiakova.lessons.lesson2;
+package moksiakova.lessons.lesson2;
 
 import java.util.Objects;
 
@@ -15,8 +15,12 @@ public class CacheElement<T> {
     /**
      * Constructor. */
     public CacheElement(T element, int index) {
-        this.element = element;
-        this.index = index;
+        if (index >= 0) {
+            this.element = element;
+            this.index = index;
+        } else {
+            throw new IllegalCacheArgumentException("Index "+index+" is illegal. ");
+        }
     }
 
     /**

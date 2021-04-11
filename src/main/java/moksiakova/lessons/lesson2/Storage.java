@@ -1,10 +1,13 @@
-package main.java.moksiakova.lessons.lesson2;
+package moksiakova.lessons.lesson2;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
 /**
  * Parametrized class.
  * */
+@Slf4j
 public class Storage<T> {
     private Object[] storage;
     private int capacity = 10;
@@ -51,7 +54,7 @@ public class Storage<T> {
             if (this.cache.isPresent(lastElement)) {
                 this.cache.delete(lastElement);
             }
-            System.out.printf("delete last index = %d\n", this.lastIndex);
+            log.info("delete last index = {}",this.lastIndex);
             this.storage[this.lastIndex] = null;
             this.lastIndex--;
         }
@@ -78,16 +81,18 @@ public class Storage<T> {
      * Get element from storage by index.
      * @param index the index of the element in the array. */
     @SuppressWarnings("unchecked")
-    public T get(int index) {
+    public T get(int index) throws StorageIndexOutOfRange {
         if (this.cache.isPresent(index)) {
-            System.out.println("get element from cache\n");
+            log.info("get element from cache by index\n");
             return this.cache.get(index);
         }
         if (index < this.capacity) {
             this.cache.add((T) this.storage[index], index);
             return (T) this.storage[index];
+        } else {
+            log.error("index {} out of range", index);
+            throw new StorageIndexOutOfRange("index "+index+" out of range");
         }
-        return null;
     }
 
     /**
@@ -95,11 +100,13 @@ public class Storage<T> {
      * @param beginCapacity the number from which we increase.
      * @param param number what time increases.*/
     private void createLargerArray(int beginCapacity, double param) {
+
         if (beginCapacity >= 0) {
             this.capacity = (int) (beginCapacity*param);
             Object[] newStorage = new Object[this.capacity];
             System.arraycopy(this.storage, 0, newStorage, 0, beginCapacity);
             this.storage = newStorage;
+            log.info("Create larger array. New length {}.",this.capacity);
         }
     }
 }
