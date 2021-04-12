@@ -19,7 +19,7 @@ public class CacheElement<T> {
             this.element = element;
             this.index = index;
         } else {
-            throw new IllegalCacheArgumentException("Index "+index+" is illegal. ");
+            throw new IllegalCacheArgumentException("Index "+index+" is illegal.");
         }
     }
 

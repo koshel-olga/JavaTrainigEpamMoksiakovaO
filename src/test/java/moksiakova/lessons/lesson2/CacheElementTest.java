@@ -8,8 +8,10 @@ class CacheElementTest {
     @Test
     public void createCacheElementAssertThrow() {
         Integer index = -1;
-        Assert.assertThrows(IllegalCacheArgumentException.class,
+        String expectedExceptionMessage = "Index "+index+" is illegal.";
+        Throwable expectedException = Assert.assertThrows(IllegalCacheArgumentException.class,
                 () -> new CacheElement(1,index));
+        Assert.assertEquals(expectedExceptionMessage, expectedException.getMessage());
     }
 
     @Test
