@@ -56,7 +56,7 @@ public class Cache<T> {
      * @param element  element type of T {@link CacheElement<>.element}.
      * @param index {@link CacheElement<>.index}.
      * */
-    void add(T element, int index) {
+    public void add(T element, int index) {
         CacheElement addElement = new CacheElement(element,index);
         for(int i=0; i<this.capacity; i++) {
             if (this.cache[i] == null) {
@@ -95,7 +95,7 @@ public class Cache<T> {
             if ( this.cache[i] == null ) { return null; }
             if ( this.cache[i].getIndex() == index ) {
                 T element = (T) this.cache[i].getElement();
-                this.moveArrayToLeft(i);
+                this.delete(element);
                 this.add(element, index);
                 return element;
             }
