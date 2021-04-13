@@ -1,5 +1,6 @@
 package moksiakova.lessons.lesson2;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -9,9 +10,11 @@ import java.util.Objects;
  * */
 @Slf4j
 public class Storage<T> {
+    @Getter
     private Object[] storage;
     private int capacity = 10;
     private int lastIndex;
+    @Getter
     private Cache<T> cache;
 
     public Storage() {

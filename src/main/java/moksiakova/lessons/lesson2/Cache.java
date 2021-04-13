@@ -1,6 +1,9 @@
 package moksiakova.lessons.lesson2;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
 
 /**
  * Parametrized class Cache. */
@@ -8,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 public class Cache<T> {
     /**
      * Elements in cache.*/
+    @Getter
     private CacheElement[] cache;
     /** Size of array cache. */
+    @Getter
     private int capacity;
 
 
