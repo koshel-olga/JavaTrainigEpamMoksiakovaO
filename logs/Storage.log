@@ -46,3 +46,23 @@
 2021-04-13 11:22:16 - delete last index = 2
 2021-04-13 11:22:33 - delete last index = 2
 2021-04-13 11:22:39 - delete last index = 2
+2021-04-13 14:19:38 - get element from cache by index
+
+2021-04-13 14:20:36 - get element from cache by index
+
+2021-04-13 14:20:53 - get element from cache by index
+
+2021-04-13 14:21:29 - get element from cache by index
+
+2021-04-13 14:25:19 - delete last index = 2
+2021-04-13 14:26:14 - delete last index = 2
+2021-04-13 14:33:25 - delete last index = 2
+2021-04-13 14:34:02 - delete last index = 2
+2021-04-13 14:35:01 - delete last index = 2
+2021-04-13 14:41:42 - delete last index = 2
+2021-04-13 15:38:10 - index 11 out of range
+2021-04-13 15:38:52 - index 11 out of range
+2021-04-13 15:38:52 - delete last index = 2
+2021-04-13 15:38:52 - get element from cache by index
+
+2021-04-13 15:38:52 - delete last index = 2
