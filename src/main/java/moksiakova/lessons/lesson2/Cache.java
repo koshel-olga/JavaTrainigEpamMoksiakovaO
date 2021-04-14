@@ -1,6 +1,9 @@
 package moksiakova.lessons.lesson2;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
 
 /**
  * Parametrized class Cache. */
@@ -8,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 public class Cache<T> {
     /**
      * Elements in cache.*/
+    @Getter
     private CacheElement[] cache;
     /** Size of array cache. */
+    @Getter
     private int capacity;
 
 
@@ -17,8 +22,8 @@ public class Cache<T> {
      * @param capacity size of array cache.*/
     public Cache(int capacity) {
         if ( capacity < 0 ) {
-            log.error("Недопустимый аргумент capacity {}.",capacity);
-            throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);}
+            log.error(String.format("Illegal argument capacity %d", capacity));
+            throw new IllegalCacheArgumentException(String.format("Illegal argument capacity %d", capacity));}
         this.capacity = capacity;
         this.cache = new CacheElement[capacity];
     }
@@ -56,7 +61,7 @@ public class Cache<T> {
      * @param element  element type of T {@link CacheElement<>.element}.
      * @param index {@link CacheElement<>.index}.
      * */
-    void add(T element, int index) {
+    public void add(T element, int index) {
         CacheElement addElement = new CacheElement(element,index);
         for(int i=0; i<this.capacity; i++) {
             if (this.cache[i] == null) {
@@ -95,7 +100,7 @@ public class Cache<T> {
             if ( this.cache[i] == null ) { return null; }
             if ( this.cache[i].getIndex() == index ) {
                 T element = (T) this.cache[i].getElement();
-                this.moveArrayToLeft(i);
+                this.delete(element);
                 this.add(element, index);
                 return element;
             }
