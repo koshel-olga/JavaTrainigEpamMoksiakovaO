@@ -22,8 +22,8 @@ public class Cache<T> {
      * @param capacity size of array cache.*/
     public Cache(int capacity) {
         if ( capacity < 0 ) {
-            log.error("Недопустимый аргумент capacity {}.",capacity);
-            throw new IllegalCacheArgumentException("Недопустимый аргумент capacity "+ capacity);}
+            log.error(String.format("Illegal argument capacity %d", capacity));
+            throw new IllegalCacheArgumentException(String.format("Illegal argument capacity %d", capacity));}
         this.capacity = capacity;
         this.cache = new CacheElement[capacity];
     }

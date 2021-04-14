@@ -2,7 +2,11 @@ package moksiakova.lessons.lesson2;
 
 import org.junit.jupiter.api.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class CacheTest {
     Cache<String> cache;
     Integer capacity;
@@ -23,56 +27,52 @@ class CacheTest {
     }
 
     @Test
-    public void createCacheAssertThrows() {
+    public void testCreateCacheWithConstructorExpectException() {
         int capacity = -1;
-        String expectedExceptionMessage = "Недопустимый аргумент capacity "+ capacity;
-        Throwable expectedException = Assertions.assertThrows(IllegalCacheArgumentException.class,
+        String expectedExceptionMessage = String.format("Illegal argument capacity %d", capacity);
+        Throwable expectedException = assertThrows(IllegalCacheArgumentException.class,
                 () -> new Cache(capacity));
-        Assertions.assertEquals(expectedExceptionMessage, expectedException.getMessage());
+        assertEquals(expectedExceptionMessage, expectedException.getMessage());
     }
 
     @Test
-    public void isPresentElementTrue() {
-        boolean expectedResult = true;
+    public void isPresentWhenElementIsFoundReturnTrue() {
         String element = "1";
 
         boolean actualResult = this.cache.isPresent(element);
 
-        Assertions.assertEquals(expectedResult, actualResult);
+        assertTrue(actualResult);
     }
 
     @Test
-    public void isPresentElementFalse() {
-        boolean expectedResult = false;
+    public void isPresentWhenElementIsFoundReturnFalse() {
         String element = "5";
 
         boolean actualResult = this.cache.isPresent(element);
 
-        Assertions.assertEquals(expectedResult, actualResult);
+        assertFalse(actualResult);
     }
 
     @Test
-    public void isPresentIndexTrue() {
-        boolean expectedResult = true;
+    public void isPresentWhenIndexIsFoundReturnTrue() {
         int index = 1;
 
         boolean actualResult = this.cache.isPresent(index);
 
-        Assertions.assertEquals(expectedResult, actualResult);
+        assertTrue(actualResult);
     }
 
     @Test
-    public void isPresentIndexFalse() {
-        boolean expectedResult = false;
+    public void isPresentWhenIndexIsFoundReturnFalse() {
         int index = 5;
 
         boolean actualResult = this.cache.isPresent(index);
 
-        Assertions.assertEquals(expectedResult, actualResult);
+        assertFalse(actualResult);
     }
 
     @Test
-    public void addMethod() {
+    public void addElementInCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
         expectedCache.add("2",2);
         expectedCache.add("3",3);
@@ -81,12 +81,12 @@ class CacheTest {
         cache.add("4",4);
 
         for( int i=0; i<capacity; i++) {
-            Assertions.assertEquals(expectedCache.get(i), cache.get(i));
+            assertEquals(expectedCache.get(i), cache.get(i));
         }
     }
 
     @Test
-    public void deleteMethodTest() {
+    public void deleteElementFromCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
         expectedCache.add("1",1);
         expectedCache.add("2",2);
@@ -94,12 +94,12 @@ class CacheTest {
         cache.delete("3");
 
         for( int i=0; i<capacity; i++) {
-            Assertions.assertEquals(expectedCache.get(i), cache.get(i));
+            assertEquals(expectedCache.get(i), cache.get(i));
         }
     }
 
     @Test
-    public void getElementMethodTest() {
+    public void getElementFromCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
         expectedCache.add("1",1);
         expectedCache.add("3",3);
@@ -107,24 +107,24 @@ class CacheTest {
 
         String actualResult = this.cache.get(2);
 
-        Assertions.assertEquals("2", actualResult);
+        assertEquals("2", actualResult);
         for( int i=0; i<capacity; i++) {
-            Assertions.assertEquals(expectedCache.get(i), cache.get(i));
+            assertEquals(expectedCache.get(i), cache.get(i));
         }
     }
 
     @Test
-    public void getElementMethodNotFoundTest() {
+    public void getElementIsNotFoundReturnNull() {
         String actualResult = this.cache.get(5);
         Assertions.assertNull(actualResult);
     }
 
     @Test
-    public void clearMethodTest() {
+    public void clearCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
         cache.clear();
         for( int i=0; i<capacity; i++) {
-            Assertions.assertEquals(expectedCache.get(i), cache.get(i));
+            assertEquals(expectedCache.get(i), cache.get(i));
         }
     }
 }

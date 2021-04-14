@@ -2,6 +2,7 @@
 /target/
 out/
 .github
+logs/
 ### IntelliJ IDEA ###
 .idea
 *.iml
