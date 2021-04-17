@@ -17,9 +17,16 @@ public class Main {
                 | InvocationTargetException e) {
             log.error(e.getMessage());
         }
-
-        //generateOutOfMemoryError();
-        //generateStackOverflowError();
+        try {
+            generateOutOfMemoryError();
+        } catch (OutOfMemoryError error) {
+            log.error(error.getMessage());
+        }
+        try {
+            generateStackOverflowError();
+        } catch (StackOverflowError error) {
+            log.error("StackOverflowError");
+        }
     }
 
     public static void generateOutOfMemoryError() {
