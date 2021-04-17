@@ -9,8 +9,8 @@ import java.io.IOException;
 @Slf4j
 public class CustomClassLoader extends ClassLoader {
 
-    private static final String pathToLoadClass = "/home/olga/myClasses/out/production/myClasses";
-    private static final String extension = ".class";
+    private static final String PATH_TO_LOAD_CLASS = "/home/olga/myClasses/out/production/myClasses";
+    private static final String EXTENSION = ".class";
 
     protected Class<?> loadClass(String className, boolean resolve)
             throws ClassNotFoundException {
@@ -54,7 +54,7 @@ public class CustomClassLoader extends ClassLoader {
 
     private File findFile(String className) {
 
-        String fileForSearch = String.format("%s/%s%s", pathToLoadClass,className, extension);
+        String fileForSearch = String.format("%s/%s%s", PATH_TO_LOAD_CLASS, className, EXTENSION);
         File fileFound = new File(fileForSearch);
         if (fileFound.exists()) {
             return fileFound;
