@@ -25,11 +25,11 @@
         </encoder>
     </appender>
 
-    <logger name="moksiakova.lessons.lesson2.Cache" level="debug" additivity="false">
+    <logger name="moksiakova.lessons.lesson7.Cache" level="debug" additivity="false">
         <appender-ref ref="FILE-CACHE"/>
     </logger>
 
-    <logger name="moksiakova.lessons.lesson2.Storage" level="debug" additivity="false">
+    <logger name="moksiakova.lessons.lesson7.Storage" level="debug" additivity="false">
         <appender-ref ref="FILE-STORAGE"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
