@@ -8,7 +8,7 @@
             </Pattern>
         </layout>
     </appender>
-    <logger name="com.epamlearning.moksiakova.lessons.Main" level="debug" additivity="false">
+    <logger name="com.epamlearning.moksiakova.lessons.lesson8.Main" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 </configuration>
