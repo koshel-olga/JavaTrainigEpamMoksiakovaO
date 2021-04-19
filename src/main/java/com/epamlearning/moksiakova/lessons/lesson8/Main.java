@@ -13,13 +13,11 @@ public class Main {
             cacheString = new Cache<>(Math.abs(-3));
         }
         cacheString.addElementToCache("first",3);
-        cacheString.addElementToCache("second",1);
-        cacheString.addElementToCache("third",4);
         cacheString.addElementToCache("fourth",76);
         cacheString.isPresentElement("first");
         cacheString.isPresentIndex(24);
         cacheString.deleteElementFromCache("fourth");
-        cacheString.getElementByIndex(1);
+        cacheString.getElementByIndex(3);
         cacheString.clearCache();
 
         Cache<Boolean> booleanCache = new Cache<>(3);
@@ -40,22 +38,10 @@ public class Main {
         String[] stringArray = {"string1","string2","string3"};
         Storage<String> storage = new Storage<>(stringArray);
         storage.addElement("string4");
-        storage.addElement("string5");
-        storage.addElement("string6");
-        storage.addElement("string7");
-        storage.addElement("string8");
-        storage.addElement("string9");
-        storage.addElement("string10");
-        storage.addElement("string11");
-
         storage.deleteLastElement();
-
         String elementLast = storage.getLastElement();
-        System.out.println("storage.getLast() = " + elementLast);
-
         try {
             String elementByIndex = storage.getElementByIndex(345);
-            System.out.println("storage.get(0) = " + elementByIndex);
         } catch (StorageIndexOutOfRange e) {
             log.error(e.getMessage());
         }

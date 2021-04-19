@@ -36,6 +36,13 @@ class StorageTest {
     }
 
     @Test
+    public void testCreateNewStorageWithChangeCapacity() {
+        String[] stringList = {"1","2","3","4","5","6","7","8","9","10","11"};
+        Storage<String> storage = new Storage<>(stringList);
+        assertEquals(storage.getCapacity(),11);
+    }
+
+    @Test
     public void addElementInStorage() throws StorageIndexOutOfRange {
         capacity = (int) (3*1.5);
         String[] stringList = {"1","2","3","4"};
@@ -46,6 +53,22 @@ class StorageTest {
         for( int i=0; i<capacity; i++) {
             assertEquals(expectedStorage.getElementByIndex(i), storage.getElementByIndex(i));
         }
+    }
+
+    @Test
+    public void addElementInStorageWithCreateLagerStorage() throws StorageIndexOutOfRange {
+        capacity = (int) (10*1.5);
+
+        this.storage.addElement("4");
+        this.storage.addElement("5");
+        this.storage.addElement("6");
+        this.storage.addElement("7");
+        this.storage.addElement("8");
+        this.storage.addElement("9");
+        this.storage.addElement("10");
+        this.storage.addElement("11");
+
+        assertEquals(storage.getCapacity(),capacity);
     }
 
     @Test
