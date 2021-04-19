@@ -29,7 +29,11 @@ public class Main {
         booleanCache.isPresentIndex(99);
         booleanCache.isPresentElement(false);
         booleanCache.deleteElementFromCache(true);
-        booleanCache.getElementByIndex(78);
+        try {
+            booleanCache.getElementByIndex(78);
+        } catch (ElementNotFoundInCacheException exception) {
+            log.error(exception.getMessage());
+        }
         booleanCache.getElementByIndex(1);
         booleanCache.clearCache();
 

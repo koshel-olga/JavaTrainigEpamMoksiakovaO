@@ -27,30 +27,4 @@ public class CacheElement<T> {
             throw new IllegalCacheArgumentException(exceptionMessage);
         }
     }
-
-    //public T getElement() {
-    //    return this.element;
-    //}
-
-    //public int getIndex() {
-    //    return this.index;
-    //}
-
-    //@Override
-    /*public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-        CacheElement<T> elementObj = (CacheElement<T>) obj;
-        return ( index == elementObj.getIndex() ) &&
-                ( ( element != null && element.equals(elementObj.getElement())) || (element == elementObj.element) );
-    }*/
-
-    //@Override
-    /*public int hashCode(){
-        return Objects.hash(element,index);
-    }*/
 }
