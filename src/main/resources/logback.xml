@@ -4,11 +4,17 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+                %d{HH:mm:ss.SSS} [%thread] %-5level [%file:%line] - %msg%n
             </Pattern>
         </layout>
     </appender>
-    <logger name="com.epamlearning.moksiakova.lessons.Main" level="debug" additivity="false">
+    <logger name="com.epamlearning.moksiakova.lessons.lesson8.Cache" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="com.epamlearning.moksiakova.lessons.lesson8.Storage" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="com.epamlearning.moksiakova.lessons.lesson8.Main" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 </configuration>
