@@ -1,5 +1,7 @@
 package com.epamlearning.moksiakova.lessons.lesson8;
 
+import com.epamlearning.moksiakova.lessons.lesson8.exception.ElementNotFoundInCacheException;
+import com.epamlearning.moksiakova.lessons.lesson8.exception.IllegalCacheArgumentException;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,11 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for {@link Cache}.
+ */
 class CacheTest {
 
     private Cache<String> cache;
     private Integer capacity;
 
+    /**
+     * Method set initial value for each test.
+     */
     @BeforeEach
     public void setUp() {
         this.capacity = 3;
@@ -21,12 +29,19 @@ class CacheTest {
         this.cache.addElementToCache("3",3);
     }
 
+    /**
+     * Method clear value after each test.
+     */
     @AfterEach
     public void tearDown() {
         this.capacity = 0;
         this.cache = null;
     }
 
+    /**
+     * Test for {@link Cache} constructor.
+     * Expected {@link IllegalCacheArgumentException} exception.
+     */
     @Test
     public void testCreateCacheWithConstructorExpectException() {
         int capacity = -1;
@@ -36,6 +51,9 @@ class CacheTest {
         assertEquals(expectedExceptionMessage, expectedException.getMessage());
     }
 
+    /**
+     * Check {@link Cache#isPresentElement(Object)} when element is found.
+     */
     @Test
     public void isPresentWhenElementIsFoundReturnTrue() {
         String element = "1";
@@ -45,6 +63,9 @@ class CacheTest {
         assertTrue(actualResult);
     }
 
+    /**
+     * Check {@link Cache#isPresentElement(Object)} when element not found.
+     */
     @Test
     public void isPresentWhenElementIsFoundReturnFalse() {
         String element = "5";
@@ -54,6 +75,9 @@ class CacheTest {
         assertFalse(actualResult);
     }
 
+    /**
+     * Check {@link Cache#isPresentIndex(int)} when element whit index is found.
+     */
     @Test
     public void isPresentWhenIndexIsFoundReturnTrue() {
         int index = 1;
@@ -63,6 +87,9 @@ class CacheTest {
         assertTrue(actualResult);
     }
 
+    /**
+     * Check {@link Cache#isPresentIndex(int)} when element whit index is not found.
+     */
     @Test
     public void isPresentWhenIndexIsFoundReturnFalse() {
         int index = 5;
@@ -72,6 +99,9 @@ class CacheTest {
         assertFalse(actualResult);
     }
 
+    /**
+     * Check {@link Cache#addElementToCache(Object, int)} in the standard correct situation.
+     */
     @Test
     public void addElementInCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
@@ -84,6 +114,9 @@ class CacheTest {
         assertEquals(expectedCache.getElementByIndex(4), cache.getElementByIndex(4));
     }
 
+    /**
+     * Check {@link Cache#deleteElementFromCache(Object)} in the standard correct situation.
+     */
     @Test
     public void deleteElementFromCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
@@ -95,6 +128,9 @@ class CacheTest {
         this.getElementByIndexReturnNull(3);
     }
 
+    /**
+     * Check {@link Cache#getElementByIndex(int)} in the standard correct situation.
+     */
     @Test
     public void getElementFromCache() {
         Cache<String> expectedCache = new Cache<>(capacity);
@@ -111,11 +147,18 @@ class CacheTest {
         assertEquals(expectedCache.getElementByIndex(3), cache.getElementByIndex(3));
     }
 
+    /**
+     * Check {@link Cache#getElementByIndex(int)} when element not exist.
+     * Expected {@link ElementNotFoundInCacheException} exception.
+     */
     @Test
     public void getElementIsNotFoundExpectException() {
         this.getElementByIndexReturnNull(5);
     }
 
+    /**
+     * Check {@link Cache#clearCache()}.
+     */
     @Test
     public void clearCache() {
         cache.clearCache();

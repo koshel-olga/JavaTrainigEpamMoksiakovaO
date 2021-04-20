@@ -1,5 +1,8 @@
 package com.epamlearning.moksiakova.lessons.lesson8;
 
+import com.epamlearning.moksiakova.lessons.lesson8.exception.ElementNotFoundInCacheException;
+import com.epamlearning.moksiakova.lessons.lesson8.exception.IllegalCacheArgumentException;
+import com.epamlearning.moksiakova.lessons.lesson8.exception.StorageIndexOutOfRange;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -9,7 +12,6 @@ public class Main {
         try {
             cacheString = new Cache<>(-3);
         } catch (IllegalCacheArgumentException exception) {
-            log.error(exception.getMessage());
             cacheString = new Cache<>(Math.abs(-3));
         }
         cacheString.addElementToCache("first",3);
@@ -29,9 +31,7 @@ public class Main {
         booleanCache.deleteElementFromCache(true);
         try {
             booleanCache.getElementByIndex(78);
-        } catch (ElementNotFoundInCacheException exception) {
-            log.error(exception.getMessage());
-        }
+        } catch (ElementNotFoundInCacheException ignored) {}
         booleanCache.getElementByIndex(1);
         booleanCache.clearCache();
 
