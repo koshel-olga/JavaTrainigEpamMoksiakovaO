@@ -1,4 +1,4 @@
-package com.epamlearning.moksiakova.lessons;
+package com.epamlearning.moksiakova.lessons.lesson9;
 
 import lombok.extern.slf4j.Slf4j;
 
