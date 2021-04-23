@@ -9,8 +9,28 @@ public class Human {
     @Value(value="5")
     private int age;
 
-    @Value(value="Buratino")
+
     private String name;
 
-    public Human() {}
+    @Value(value="3")
+    private boolean isChild;
+
+    @Value(value="Buratino")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Value(value="Buratino")
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", isChild='" + isChild + '\'' +
+                '}';
+    }
 }

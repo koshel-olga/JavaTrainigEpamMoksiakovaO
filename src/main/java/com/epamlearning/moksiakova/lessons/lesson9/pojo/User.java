@@ -6,8 +6,6 @@ public class User {
     private String userNick;
     private int userId;
 
-    public User() {}
-
     public String getUserNick() {
         return userNick;
     }
