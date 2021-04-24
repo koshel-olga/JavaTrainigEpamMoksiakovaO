@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Value {
-    String value() default "";
+    String value() default "defaultValue";
 }

@@ -9,20 +9,31 @@ public class Human {
     @Value(value="5")
     private int age;
 
-
+    @Value
     private String name;
 
-    @Value(value="3")
-    private boolean isChild;
-
-    @Value(value="Buratino")
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String description;
 
     @Value(value="Buratino")
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Value(value="very good boy")
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -30,7 +41,7 @@ public class Human {
         return "Human{" +
                 "age=" + age +
                 ", name='" + name + '\'' +
-                ", isChild='" + isChild + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
