@@ -3,8 +3,8 @@ package com.epamlearning.moksiakova.lessons.lesson9.pojo;
 import com.epamlearning.moksiakova.lessons.lesson9.annotation.Entity;
 
 /**
- * Class for test.
- * */
+ * Class for test AnnotationHandlerTest.checkAnnotationEntityWhenSetEntityNotSetValue.
+ */
 @Entity
 public class HumanWithEntityWithoutValue {
 

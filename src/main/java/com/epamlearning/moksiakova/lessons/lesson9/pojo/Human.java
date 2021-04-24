@@ -3,10 +3,13 @@ package com.epamlearning.moksiakova.lessons.lesson9.pojo;
 import com.epamlearning.moksiakova.lessons.lesson9.annotation.Entity;
 import com.epamlearning.moksiakova.lessons.lesson9.annotation.Value;
 
+/**
+ * POJO class.
+ */
 @Entity
 public class Human {
 
-    @Value(value="5")
+    @Value("5")
     private int age;
 
     @Value
@@ -14,12 +17,12 @@ public class Human {
 
     private String description;
 
-    @Value(value="Buratino")
+    @Value("Buratino")
     public void setAge(Integer age) {
         this.age = age;
     }
 
-    @Value(value="very good boy")
+    @Value("very good boy")
     public void setDescription(String description) {
         this.description = description;
     }

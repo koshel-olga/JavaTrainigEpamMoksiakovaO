@@ -6,15 +6,13 @@ import com.epamlearning.moksiakova.lessons.lesson9.exception.NoValueAnnotationEx
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 /**
  * Class for work with annotation.
- * */
+ */
 public class AnnotationHandler {
 
     private static Logger logger = LoggerFactory.getLogger(AnnotationHandler.class);
@@ -24,7 +22,7 @@ public class AnnotationHandler {
      *
      * @param object Object for checking.
      * @return boolean.
-     * */
+     */
     public static boolean checkAnnotationEntity(Object object) {
         if (object.getClass().isAnnotationPresent(Entity.class)) {
             if (!checkAnnotationValue(object)) {
@@ -33,8 +31,7 @@ public class AnnotationHandler {
                         object.getClass().getSimpleName());
                 throw new NoValueAnnotationException(exceptionMessage);
             }
-            logger.info(
-                    "Class {} have annotation Entity and annotation Value",
+            logger.info("Class {} have annotation Entity and annotation Value",
                     object.getClass().getSimpleName()
             );
             return true;
@@ -48,8 +45,7 @@ public class AnnotationHandler {
                 throw new IllegalStateException(exceptionMessage);
             }
         }
-        logger.info(
-                "Class {} have not annotation Entity and annotation Value",
+        logger.info("Class {} have not annotation Entity and annotation Value",
                 object.getClass().getSimpleName()
         );
         return false;
@@ -60,7 +56,7 @@ public class AnnotationHandler {
      *
      * @param object Object for checking.
      * @return boolean.
-     * */
+     */
     public static boolean checkAnnotationValue(Object object) {
         Field[] declaredFields = object.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -79,11 +75,10 @@ public class AnnotationHandler {
     }
 
     /**
-     *
      * Method sets value from annotation Value to field.
      *
      * @param object Object for setting.
-     * */
+     */
     public static void setValueToFieldFromAnnotation(Object object) {
         Class<?> clazz = object.getClass();
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -92,14 +87,12 @@ public class AnnotationHandler {
                 final Object value = convertAnnotationValueToFieldType(field);
                 try {
                     field.set(object, value);
-                    logger.info(
-                            "Set value {} to field {} in class {}",
+                    logger.info("Set value {} to field {} in class {}",
                             value,
                             field.getName(),
                             clazz.getSimpleName());
                 } catch (IllegalArgumentException | IllegalAccessException exception) {
-                    logger.error(
-                            "Cannot set value {} on field {} type of {} in class {}",
+                    logger.error("Cannot set value {} on field {} type of {} in class {}",
                             field.getAnnotation(Value.class).value(),
                             field.getName(),
                             field.getType().getSimpleName(),
@@ -114,7 +107,7 @@ public class AnnotationHandler {
      * Method sets value  from annotation Value to method.
      *
      * @param object Object for setting.
-     * */
+     */
     public static void setValueToMethodFromAnnotation(Object object) {
         Class<?> clazz = object.getClass();
         Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -130,8 +123,7 @@ public class AnnotationHandler {
                             clazz.getSimpleName()
                     );
                 } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException exception) {
-                    logger.error(
-                            "Cannot set value {} with method {} in class {}",
+                    logger.error("Cannot set value {} with method {} in class {}",
                             method.getAnnotation(Value.class).value(),
                             method.getName(),
                             object.getClass().getSimpleName()
@@ -145,7 +137,7 @@ public class AnnotationHandler {
      * Method tries to convert value from annotation to type of field.
      *
      * @param field
-     * */
+     */
     private static Object convertAnnotationValueToFieldType(Field field) {
         field.setAccessible(true);
         String value = field.getAnnotation(Value.class).value();

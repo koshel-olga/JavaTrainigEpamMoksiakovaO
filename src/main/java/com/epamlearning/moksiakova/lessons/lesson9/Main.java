@@ -12,7 +12,7 @@ public class Main {
 
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) throws IllegalAccessException {
+    public static void main(String[] args) {
         Human human = new Human();
         HumanWithoutEntityAndValue humanWithoutEntityAndValue = new HumanWithoutEntityAndValue();
         try {

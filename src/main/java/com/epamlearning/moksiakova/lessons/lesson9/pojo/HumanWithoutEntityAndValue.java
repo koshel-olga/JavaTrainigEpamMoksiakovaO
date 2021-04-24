@@ -1,8 +1,8 @@
 package com.epamlearning.moksiakova.lessons.lesson9.pojo;
 
 /**
- * Class for test.
- * */
+ * Class for test AnnotationHandlerTest.checkAnnotationEntityWhenNotSetEntityAndValue.
+ */
 public class HumanWithoutEntityAndValue {
 
     private int age;
