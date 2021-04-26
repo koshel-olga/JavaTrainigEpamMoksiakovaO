@@ -8,7 +8,13 @@
             </Pattern>
         </layout>
     </appender>
-    <logger name="com.epamlearning.moksiakova.lessons.Main" level="debug" additivity="false">
+    <logger name="com.epamlearning.moksiakova.lessons.lesson10.Main" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="com.epamlearning.moksiakova.lessons.lesson10.TaskOne.TaskOneWithFor" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="com.epamlearning.moksiakova.lessons.lesson10.WorkWithFile.FileHandler" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 </configuration>
