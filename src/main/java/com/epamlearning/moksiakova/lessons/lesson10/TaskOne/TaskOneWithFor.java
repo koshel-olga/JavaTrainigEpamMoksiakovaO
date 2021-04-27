@@ -1,49 +1,23 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskOne;
 
-import com.epamlearning.moksiakova.lessons.lesson10.WorkWithFile.FileHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-/**
- * Task 1:
- *
- * Одним стримом сгенерировать коллекцию с 10000 рандомными элементами UUID.
- *
- * Записать в файл.
- *
- * Одним стримом считать этот файл и посчитать количество элементов UUID,
- * в которых сумма цифр > 100
- *
- * Найти дату конца света по формуле: сегодня + N месяцев + M дней,
- *
- * где N – первые два числа от полученного значения, а М – вторые.
- *
- * Значение с ведущими нулями, если цифр меньше 4.
- * По тихоокеанской временной зоне.
- * Дату вывести в формате ISO с датой и временем (см DateTimeFormatter)
- */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Class for demonstration the task1 with for.
  */
 @Slf4j
-public class TaskOneWithFor {
+public class TaskOneWithFor extends TaskOneBase {
 
-    private FileHandler fileHandler;
-    private final String pathToFile = "UUID.txt";
-
+    /**
+     * Init method.
+     */
     public void run() {
-        //todo add clear file
-        this.fileHandler = new FileHandler();
+        super.run();
         List<UUID> uuidList = this.generateUUID();
         this.writeToFileCollection(uuidList);
         List<String> uuidsFromFile = this.readAllUuidFromFiles();
@@ -53,64 +27,48 @@ public class TaskOneWithFor {
                 countUUID++;
             }
         }
-        log.info("{}",countUUID);
+        log.info("Number of UUID where sum number more then 100 : {}", countUUID);
         String dayOff = this.dayOff(countUUID);
         log.info("day off is : {}",dayOff);
     }
 
-    private List<UUID> generateUUID() {
+    /**
+     * Method generate UUID.
+     * @return collection of UUID.
+     */
+    private ArrayList<UUID> generateUUID() {
         ArrayList<UUID> uuidList = new ArrayList<>();
         for(int i=0; i<10000; i++) {
             uuidList.add(UUID.randomUUID());
         }
+        log.info("Generate collection of UUID.");
         return uuidList;
     }
 
+    /**
+     * Method write collection of UUID to file.
+     * @param uuids collection of UUID.
+     */
     private void writeToFileCollection(Collection<UUID> uuids) {
         for (UUID uuid: uuids) {
             this.fileHandler.fileWriteToEnd(pathToFile, uuid.toString());
         }
+        log.info("Write to {} collection of UUID.", pathToFile);
     }
 
-    private List<String> readAllUuidFromFiles() {
-        Optional<List<String>> readedLines = this.fileHandler.readAllFile(pathToFile);
-        if (readedLines.isPresent()) {
-            return readedLines.get();
-        }
-        return Collections.emptyList();
-    }
-
+    /**
+     * Method count sum of numbers in UUID.
+     * @param uuid
+     * @return sum of numbers.
+     */
     private int sumAllNumberInUuid(String uuid) {
         int sum = 0;
         String[] charsUUID = uuid.split("");
         for (String charUUID : charsUUID) {
             if (this.isNumeric(charUUID)) {
-                sum += Integer.valueOf(charUUID);
+                sum += Integer.parseInt(charUUID);
             }
         }
         return sum;
-    }
-
-    private boolean isNumeric(String strNum) {
-        Pattern pattern = Pattern.compile("\\d");
-        if (strNum == null) {
-            return false;
-        }
-        return pattern.matcher(strNum).matches();
-    }
-
-    private String dayOff(int param) {
-        String paramToCount = Integer.toString(param);
-        while (paramToCount.length() < 4 ) {
-            paramToCount = "0"+paramToCount;
-        }
-        Integer paramMonth = Integer.valueOf(paramToCount.substring(0,1));
-        Integer paramDay = Integer.valueOf(paramToCount.substring(2,3));
-
-        LocalDateTime dayOff = LocalDateTime.now().plusMonths(paramMonth).plusDays(paramDay);
-        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(dayOff, zoneId);
-        String output = zonedDateTime.format( DateTimeFormatter.ISO_LOCAL_DATE_TIME );
-        return output;
     }
 }

@@ -1,45 +1,30 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskTwo;
 
-import com.epamlearning.moksiakova.lessons.lesson10.WorkWithFile.FileHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Base64;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class TaskTwoWithFor {
+/**
+ * Class for task 2 with for.
+ */
+@Slf4j
+public class TaskTwoWithFor extends TaskTwoBase{
 
-    private FileHandler fileHandler;
-    private final String pathToFile = "File.txt";
-
+    /**
+     * Init method.
+     */
     public void run() {
-        this.fileHandler = new FileHandler();
+        super.run();
         List<String> objects = this.readAllStringsFromFile();
         for (String obj : objects ) {
-            Ham ham = this.createObjectFromString(new String(Base64.getDecoder().decode(obj)));
+            String stringToObj = new String(Base64.getDecoder().decode(obj));
+            Optional<Ham> ham = this.createObjectFromString(stringToObj);
+            ham.ifPresentOrElse(
+                    hamObj -> log.info("Create object Ham : {}",hamObj.toString()),
+                    () -> log.info("can not create object ham from string : {}", stringToObj)
+            );
         }
-    }
-
-    private List<String> readAllStringsFromFile() {
-        Optional<List<String>> readedLines = this.fileHandler.readAllFile(pathToFile);
-        if (readedLines.isPresent()) {
-            return readedLines.get();
-        }
-        return Collections.emptyList();
-    }
-
-    private Ham createObjectFromString(String decodeString) {
-        String regex = "^type=\\'(?<typeValue>.*)\\',\\s*weight=(?<weightValue>\\d*),\\s*cost=(?<costValue>\\d*)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(decodeString);
-        if (matcher.find()) {
-            String typeValue = matcher.group("typeValue");
-            int weightValue = Integer.parseInt(matcher.group("weightValue"));
-            long costValue = Long.parseLong(matcher.group("weightValue"));
-            return new Ham(typeValue,weightValue,costValue);
-        }
-        return null;
     }
 }
