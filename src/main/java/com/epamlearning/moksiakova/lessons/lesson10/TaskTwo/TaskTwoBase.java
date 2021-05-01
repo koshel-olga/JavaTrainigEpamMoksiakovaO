@@ -1,6 +1,8 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskTwo;
 
 import com.epamlearning.moksiakova.lessons.lesson10.WorkWithFile.FileHandler;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
@@ -13,6 +15,7 @@ import java.util.regex.Pattern;
  * Base class for task2.
  */
 @Slf4j
+@NoArgsConstructor
 public class TaskTwoBase {
 
     /**
@@ -47,13 +50,14 @@ public class TaskTwoBase {
      * @return {@link Optional<Ham>}.
      */
     protected Optional<Ham> createObjectFromString(String decodeString) {
+        //decodeString: type='Докторская', weight=1134, cost=9934
         String regex = "^type=\\'(?<typeValue>.*)\\',\\s*weight=(?<weightValue>\\d*),\\s*cost=(?<costValue>\\d*)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(decodeString);
         if (matcher.find()) {
             String typeValue = matcher.group("typeValue");
             int weightValue = Integer.parseInt(matcher.group("weightValue"));
-            long costValue = Long.parseLong(matcher.group("weightValue"));
+            long costValue = Long.parseLong(matcher.group("costValue"));
             return Optional.of(new Ham(typeValue,weightValue,costValue));
         }
         return Optional.empty();

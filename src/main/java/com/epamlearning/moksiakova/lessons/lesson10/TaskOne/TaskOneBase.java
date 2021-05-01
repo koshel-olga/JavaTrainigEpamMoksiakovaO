@@ -1,6 +1,8 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskOne;
 
 import com.epamlearning.moksiakova.lessons.lesson10.WorkWithFile.FileHandler;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,12 +17,14 @@ import java.util.regex.Pattern;
 /**
  * Base class for Task1.
  */
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskOneBase {
 
     /**
      * Class for work with files.
      */
-    protected FileHandler fileHandler;
+    protected FileHandler fileHandler = new FileHandler();
 
     /**
      * Path to File with generated UUID.
@@ -31,7 +35,6 @@ public class TaskOneBase {
      * Init method.
      */
     public void run() {
-        this.fileHandler = new FileHandler();
         this.fileHandler.clearFile(pathToFile);
     }
 

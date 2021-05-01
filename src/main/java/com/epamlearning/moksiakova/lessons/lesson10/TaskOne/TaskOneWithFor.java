@@ -1,5 +1,7 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskOne;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.UUID;
  * Class for demonstration the task1 with for.
  */
 @Slf4j
+@AllArgsConstructor
 public class TaskOneWithFor extends TaskOneBase {
 
     /**

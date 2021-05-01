@@ -21,8 +21,7 @@ public class TaskTwoWithFor extends TaskTwoBase{
         for (String obj : objects ) {
             String stringToObj = new String(Base64.getDecoder().decode(obj));
             Optional<Ham> ham = this.createObjectFromString(stringToObj);
-            ham.ifPresentOrElse(
-                    hamObj -> log.info("Create object Ham : {}",hamObj.toString()),
+            ham.ifPresentOrElse(hamObj -> log.info("Create object Ham : {}",  hamObj.toString()),
                     () -> log.info("can not create object ham from string : {}", stringToObj)
             );
         }

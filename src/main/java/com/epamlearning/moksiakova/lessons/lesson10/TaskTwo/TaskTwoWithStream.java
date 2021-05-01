@@ -18,12 +18,10 @@ public class TaskTwoWithStream extends TaskTwoBase {
     public void run() {
         super.run();
         List<String> objects = this.readAllStringsFromFile();
-        objects.forEach(
-                obj -> {
+        objects.forEach(obj -> {
                         String stringToObj = new String(Base64.getDecoder().decode(obj));
                         Optional<Ham> ham = this.createObjectFromString(stringToObj);
-                        ham.ifPresentOrElse(
-                            hamObj -> log.info("Create object Ham : {}",hamObj.toString()),
+                        ham.ifPresentOrElse(hamObj -> log.info("Create object Ham : {}",hamObj.toString()),
                             () -> log.info("can not create object ham from string : {}", stringToObj)
                         );
                 });

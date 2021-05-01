@@ -1,5 +1,9 @@
 package com.epamlearning.moksiakova.lessons.lesson10.TaskTwo;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
 public class Ham {
     private String type;
     private int weight;
@@ -9,14 +13,5 @@ public class Ham {
         this.type = type;
         this.weight = weight;
         this.cost = cost;
-    }
-
-    @Override
-    public String toString() {
-        return "Ham{" +
-                "type='" + type + '\'' +
-                ", weight=" + weight +
-                ", cost=" + cost +
-                '}';
     }
 }
