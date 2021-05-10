@@ -22,6 +22,7 @@
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <lombok.version>1.18.18</lombok.version>
         <logback-classic.version>1.2.3</logback-classic.version>
+        <org.slf4j.version>1.7.28</org.slf4j.version>
         <junit.version>4.13</junit.version>
         <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
         <mockito-junit-jupiter.version>3.3.3</mockito-junit-jupiter.version>
@@ -107,7 +108,12 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.28</version>
+                <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${org.slf4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
