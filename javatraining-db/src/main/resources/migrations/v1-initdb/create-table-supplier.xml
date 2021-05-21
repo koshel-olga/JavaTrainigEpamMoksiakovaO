@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="2021-05-21_create_table_Supplier" author="moksiakova">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="Supplier"/>
+            </not>
+        </preConditions>
+        <createTable tableName="Supplier">
+            <column name="SupplierId" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="CompanyName" type="varchar(40)"/>
+            <column name="Phone" type="varchar(20)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
