@@ -16,7 +16,7 @@
         <liquibase.schema>moksiakova</liquibase.schema>
         <liquibase.user>usr</liquibase.user>
         <liquibase.password>pass</liquibase.password>
-        <liquibase.changeLogFile></liquibase.changeLogFile>
+        <liquibase.changeLogFile>src/main/resources/migrations/master.xml</liquibase.changeLogFile>
     </properties>
 
     <build>
