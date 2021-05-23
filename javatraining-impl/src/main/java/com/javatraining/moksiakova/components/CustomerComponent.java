@@ -32,6 +32,7 @@ public class CustomerComponent {
         customer.setCustomerName(customerName);
         customer.setPhone(customerPhone);
         repository.save(customer);
+        log.info("Successfully create Customer: {}",customer);
     }
 
     /**
@@ -46,6 +47,7 @@ public class CustomerComponent {
             customer.setCustomerName(customerName);
             customer.setPhone(customerPhone);
             repository.save(customer);
+            log.info("Successfully update Customer: {}", customer);
         } catch (EntityNotFoundException e) {
             log.info("Can not update Customer with Id={}",customerId);
         }
@@ -74,8 +76,9 @@ public class CustomerComponent {
         try {
             Customer customer = repository.findOrDie(customerId);
             repository.delete(customer);
+            log.info("Successfully delete customer: {}", customer);
         } catch (EntityNotFoundException e) {
-            log.info("Can not delete Customer with Id={}",customerId);
+            log.info("Can not delete Customer with Id={}. Entity not exist.",customerId);
         }
     }
 }

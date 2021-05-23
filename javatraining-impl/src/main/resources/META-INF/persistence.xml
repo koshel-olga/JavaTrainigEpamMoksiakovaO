@@ -3,9 +3,12 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
             http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-<persistence-unit name="javatraining-unit">
+<persistence-unit name="javatraining-unit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>com.javatraining.moksiakova.domain.entity.Customer</class>
+    <class>com.javatraining.moksiakova.domain.entity.Supplier</class>
+    <class>com.javatraining.moksiakova.domain.entity.Order</class>
+    <class>com.javatraining.moksiakova.domain.entity.Product</class>
     <properties>
         <property name="current_session_context_class" value = "thread"/>
     </properties>

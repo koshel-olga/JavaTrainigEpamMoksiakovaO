@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entity class for table customer.
@@ -13,7 +15,6 @@ import javax.persistence.*;
 @Table(name="customer")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Customer {
 
     /**
@@ -35,4 +36,7 @@ public class Customer {
      */
     @Column(name="phone")
     private String phone;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Order> customerOrders = new ArrayList<>();
 }
