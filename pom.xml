@@ -26,6 +26,10 @@
         <junit.version>4.13</junit.version>
         <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
         <mockito-junit-jupiter.version>3.3.3</mockito-junit-jupiter.version>
+        <postgresql.version>42.2.16</postgresql.version>
+        <liquibase.version>4.3.5</liquibase.version>
+        <hibernate.version>5.4.31.Final</hibernate.version>
+        <postgresql.version>42.2.20</postgresql.version>
     </properties>
 
     <build>
@@ -132,6 +136,31 @@
                 <artifactId>mockito-junit-jupiter</artifactId>
                 <version>${mockito-junit-jupiter.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
