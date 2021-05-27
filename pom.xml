@@ -30,6 +30,7 @@
         <liquibase.version>4.3.5</liquibase.version>
         <hibernate.version>5.4.31.Final</hibernate.version>
         <postgresql.version>42.2.20</postgresql.version>
+        <servlet.version>2.5</servlet.version>
     </properties>
 
     <build>
@@ -161,6 +162,11 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
