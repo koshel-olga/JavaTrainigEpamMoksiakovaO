@@ -6,7 +6,8 @@ import com.javatraining.moksiakova.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -16,25 +17,47 @@ public class CustomerService {
 
     public CustomResponse<Customer> findCustomer(int customerId) {
         Optional<Customer> customer = component.findById(customerId);
-        return customer.map(
-                value -> new CustomResponse<>(200, "Ok", value.toString(), value)
-        ).orElseGet(
-                () -> new CustomResponse<>(404, "Not found", "", null)
-        );
+        return customer.map(value -> new CustomResponse<>(200, "Ok", value))
+                .orElseGet(() -> new CustomResponse<>(404, "Not found", null));
     }
 
-    public CustomResponse<Customer> createCustomer(Map params) {
-        CustomResponse<Customer> customResponse = this.validateParams(params);
+    public CustomResponse<List<Customer>> findAll() {
+        List<Customer> customers = component.findAll();
+        return new CustomResponse<>(200, "Ok", customers);
+    }
+
+    public CustomResponse<Customer> createCustomer(Customer customer) {
+        CustomResponse<Customer> customResponse = this.validateParams(customer);
+        if (customResponse.getCode() == 200) {
+            Customer newCustomer = component.createCustomer(customer.getCustomerName(),
+                                                            customer.getPhone());
+            customResponse.setEntity(newCustomer);
+        }
         return customResponse;
     }
 
-    private CustomResponse<Customer> validateParams(Map params) {
-        if (!params.containsKey("customer_name")) {
-            return new CustomResponse<>(403,"Field customer_name is not set.", "", null);
+    public CustomResponse<Customer> updateCustomer(Customer customer) {
+        CustomResponse<Customer> customResponse = this.validateParams(customer);
+        if (customResponse.getCode() == 200) {
+            try {
+                Customer updateCustomer = component.updateCustomer(customer.getCustomerId(), customer.getCustomerName(),
+                        customer.getPhone());
+                customResponse.setEntity(updateCustomer);
+            } catch (EntityNotFoundException e) {
+                customResponse.setCode(404);
+                customResponse.setMessage(e.getMessage());
+            }
         }
-        if (!params.containsKey("phone")) {
-            return new CustomResponse<>(403,"Field phone is not set.","", null);
+        return customResponse;
+    }
+
+    private CustomResponse<Customer> validateParams(Customer customer) {
+        if (Objects.isNull(customer.getCustomerName())) {
+            return new CustomResponse<>(404,"Field customerName is not set.", null);
         }
-        return new CustomResponse<>(200, "Ok","", null);
+        if (Objects.isNull(customer.getPhone())) {
+            return new CustomResponse<>(404,"Field phone is not set.", null);
+        }
+        return new CustomResponse<>(200, "Ok", null);
     }
 }

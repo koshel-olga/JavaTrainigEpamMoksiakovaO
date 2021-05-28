@@ -5,6 +5,7 @@ import com.javatraining.moksiakova.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,12 +28,13 @@ public class CustomerComponent {
      * @param customerPhone
      * @param customerName
      */
-    public void createCustomer(String customerPhone, String customerName) {
+    public Customer createCustomer(String customerPhone, String customerName) {
         Customer customer = new Customer();
         customer.setCustomerName(customerName);
         customer.setPhone(customerPhone);
         repository.save(customer);
         log.info("Successfully create Customer: {}",customer);
+        return customer;
     }
 
     /**
@@ -41,16 +43,16 @@ public class CustomerComponent {
      * @param customerPhone
      * @param customerName
      */
-    public void updateCustomer(int customerId, String customerPhone, String customerName) {
-        try {
-            Customer customer = repository.findOrDie(customerId);
-            customer.setCustomerName(customerName);
-            customer.setPhone(customerPhone);
-            repository.save(customer);
-            log.info("Successfully update Customer: {}", customer);
-        } catch (EntityNotFoundException e) {
-            log.info("Can not update Customer with Id={}",customerId);
-        }
+    public Customer updateCustomer(int customerId, String customerName, String customerPhone) {
+        Customer customer = repository.findOrDie(customerId);
+        customer.setCustomerName(customerName);
+        customer.setPhone(customerPhone);
+        repository.save(customer);
+        log.info("Successfully update Customer: {}", customer);
+        return customer;
+        //} catch (EntityNotFoundException e) {
+        //    log.info("Can not update Customer with Id={}",customerId);
+        //}
     }
 
     /**
@@ -66,6 +68,14 @@ public class CustomerComponent {
             log.info("Entity Customer with Id={} not found",customerId);
         }
         return Optional.empty();
+    }
+
+    /**
+     * Find all {@link Customer}.
+     * @return
+     */
+    public List<Customer> findAll() {
+        return repository.findAll();
     }
 
     /**

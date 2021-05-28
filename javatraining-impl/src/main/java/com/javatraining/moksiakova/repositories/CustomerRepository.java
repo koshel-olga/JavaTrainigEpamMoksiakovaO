@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -15,8 +16,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CustomerRepository {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("javatraining-unit");
-    private EntityManager em = emf.createEntityManager();
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("javatraining-unit");
+    private final EntityManager em = emf.createEntityManager();
 
     /**
      * Find {@link Customer} in database by id.
@@ -31,6 +32,15 @@ public class CustomerRepository {
                     String.format("Can't find Customer for ID %d", customerId));
         }
         return customer;
+    }
+
+    /**
+     * Get collection {@link Customer} in database.
+     * @return list of customers.
+     */
+    public List<Customer> findAll() {
+        List<Customer> customers = em.createQuery("Select a From Customer a", Customer.class).getResultList();
+        return customers;
     }
 
     /**

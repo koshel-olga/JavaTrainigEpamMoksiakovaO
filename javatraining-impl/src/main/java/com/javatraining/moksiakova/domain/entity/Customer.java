@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.domain.entity;
 
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,18 +24,21 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="customer_id", columnDefinition = "serial")
+    @Expose
     private int customerId;
 
     /**
      * Name of customer.
      */
     @Column(name="customer_name")
+    @Expose
     private String customerName;
 
     /**
      * Phone of customer.
      */
     @Column(name="phone")
+    @Expose
     private String phone;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
