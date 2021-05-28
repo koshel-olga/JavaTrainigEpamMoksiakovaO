@@ -5,8 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CustomResponse {
+public class CustomResponse<T> {
 
     private int code;
     private String message;
+    private String jsonObject;
+    private T object;
 }

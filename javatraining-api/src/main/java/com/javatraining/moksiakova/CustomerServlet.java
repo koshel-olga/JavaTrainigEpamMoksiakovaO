@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova;
 
+import com.google.gson.Gson;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.services.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +20,35 @@ public class CustomerServlet extends HttpServlet {
 
     private final CustomerService service = new CustomerService();
 
+    private Gson gson = new Gson();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CustomResponse resp = service.createCustomer(request.getParameterMap());
-        response.setStatus(resp.getCode());
-        response.setContentType("application/json");
-
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println(resp.getCode());
-        out.println("<br>");
-        out.println(resp.getMessage());
-        //Map requestMap = request.getParameterMap();
-        //if (requestMap.isEmpty()) {
-            // all customers
-        //} else if (requestMap.containsKey("id")) {
-            //
-        //}
+            throws IOException
+    {
+        Map requestMap = request.getParameterMap();
+        CustomResponse<Customer> rrr = service.findCustomer(1);
+        if (rrr.getCode() == 200) {
+            this.sendResponse(gson.toJson(rrr.getJsonObject()), response);
+        }
+        else {
+            this.sendResponse(gson.toJson(rrr), response);
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         CustomResponse resp = service.createCustomer(request.getParameterMap());
         response.setStatus(resp.getCode());
         response.setContentType("application/json");
+    }
+
+    private void sendResponse(String objectString, HttpServletResponse response) throws IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(objectString);
+        out.flush();
     }
 }

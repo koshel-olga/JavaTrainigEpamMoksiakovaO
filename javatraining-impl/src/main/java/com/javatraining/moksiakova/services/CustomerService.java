@@ -5,6 +5,7 @@ import com.javatraining.moksiakova.components.CustomerComponent;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,23 +14,27 @@ public class CustomerService {
 
     private final CustomerComponent component = new CustomerComponent();
 
-    public Optional<Customer> findCustomer(int customerId) {
+    public CustomResponse<Customer> findCustomer(int customerId) {
         Optional<Customer> customer = component.findById(customerId);
-        return customer;
+        return customer.map(
+                value -> new CustomResponse<>(200, "Ok", value.toString(), value)
+        ).orElseGet(
+                () -> new CustomResponse<>(404, "Not found", "", null)
+        );
     }
 
-    public CustomResponse createCustomer(Map params) {
-        CustomResponse customResponse = this.validateParams(params);
+    public CustomResponse<Customer> createCustomer(Map params) {
+        CustomResponse<Customer> customResponse = this.validateParams(params);
         return customResponse;
     }
 
-    private CustomResponse validateParams(Map params) {
+    private CustomResponse<Customer> validateParams(Map params) {
         if (!params.containsKey("customer_name")) {
-            return new CustomResponse(403,"Field customer_name is not set.");
+            return new CustomResponse<>(403,"Field customer_name is not set.", "", null);
         }
         if (!params.containsKey("phone")) {
-            return new CustomResponse(403,"Field phone is not set.");
+            return new CustomResponse<>(403,"Field phone is not set.","", null);
         }
-        return new CustomResponse(200, "Ok");
+        return new CustomResponse<>(200, "Ok","", null);
     }
 }
