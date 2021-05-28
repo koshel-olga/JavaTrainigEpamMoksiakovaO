@@ -31,6 +31,7 @@
         <hibernate.version>5.4.31.Final</hibernate.version>
         <postgresql.version>42.2.20</postgresql.version>
         <servlet.version>2.5</servlet.version>
+        <jstl.version>1.2</jstl.version>
     </properties>
 
     <build>
@@ -86,6 +87,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
@@ -137,11 +139,6 @@
                 <artifactId>mockito-junit-jupiter</artifactId>
                 <version>${mockito-junit-jupiter.version}</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>${postgresql.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>

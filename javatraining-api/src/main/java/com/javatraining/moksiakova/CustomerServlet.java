@@ -22,13 +22,21 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Map requestMap = request.getParameterMap();
-        if (requestMap.isEmpty()) {
-            // all customers
-        } else if (requestMap.containsKey("id")) {
-            //
-        }
+        CustomResponse resp = service.createCustomer(request.getParameterMap());
+        response.setStatus(resp.getCode());
+        response.setContentType("application/json");
 
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println(resp.getCode());
+        out.println("<br>");
+        out.println(resp.getMessage());
+        //Map requestMap = request.getParameterMap();
+        //if (requestMap.isEmpty()) {
+            // all customers
+        //} else if (requestMap.containsKey("id")) {
+            //
+        //}
     }
 
     @Override
@@ -36,9 +44,7 @@ public class CustomerServlet extends HttpServlet {
             throws ServletException, IOException {
 
         CustomResponse resp = service.createCustomer(request.getParameterMap());
-        response.setStatus(resp.getErrorCode());
+        response.setStatus(resp.getCode());
         response.setContentType("application/json");
-        response.setContentType();
-
     }
 }
