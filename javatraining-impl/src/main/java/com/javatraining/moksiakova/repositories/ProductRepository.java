@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,5 +37,14 @@ public class ProductRepository {
         em.getTransaction().begin();
         em.remove(product);
         em.getTransaction().commit();
+    }
+
+    /**
+     * Get collection {@link Product} in database.
+     * @return list of Product.
+     */
+    public List<Product> findAll() {
+        List<Product> products = em.createQuery("Select a From Product a", Product.class).getResultList();
+        return products;
     }
 }

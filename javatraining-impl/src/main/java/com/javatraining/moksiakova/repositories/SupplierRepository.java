@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.repositories;
 
+import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Supplier;
 import lombok.RequiredArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -30,6 +32,15 @@ public class SupplierRepository {
                     String.format("Can't find Supplier for ID %d", supplierId));
         }
         return supplier;
+    }
+
+    /**
+     * Get collection {@link Supplier} in database.
+     * @return list of Supplier.
+     */
+    public List<Supplier> findAll() {
+        List<Supplier> suppliers = em.createQuery("Select a From Supplier a", Supplier.class).getResultList();
+        return suppliers;
     }
 
     /**

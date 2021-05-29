@@ -14,4 +14,28 @@
         <servlet-name>CustomerServlet</servlet-name>
         <url-pattern>/customers</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.javatraining.moksiakova.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/orders</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SupplierServlet</servlet-name>
+        <servlet-class>com.javatraining.moksiakova.SupplierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SupplierServlet</servlet-name>
+        <url-pattern>/suppliers</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.javatraining.moksiakova.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/products</url-pattern>
+    </servlet-mapping>
 </web-app>

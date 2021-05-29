@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CustomerService {
@@ -16,9 +15,12 @@ public class CustomerService {
     private final CustomerComponent component = new CustomerComponent();
 
     public CustomResponse<Customer> findCustomer(int customerId) {
-        Optional<Customer> customer = component.findById(customerId);
-        return customer.map(value -> new CustomResponse<>(200, "Ok", value))
-                .orElseGet(() -> new CustomResponse<>(404, "Not found", null));
+        try {
+            Customer customer = component.findById(customerId);
+            return new CustomResponse<>(200, "Ok", customer);
+        } catch (EntityNotFoundException e) {
+            return new CustomResponse<>(400, e.getMessage(), null);
+        }
     }
 
     public CustomResponse<List<Customer>> findAll() {
@@ -52,12 +54,28 @@ public class CustomerService {
     }
 
     private CustomResponse<Customer> validateParams(Customer customer) {
+        int code = 200;
+        String message = "Ok";
         if (Objects.isNull(customer.getCustomerName())) {
-            return new CustomResponse<>(404,"Field customerName is not set.", null);
+            code = 400;
+            message = "Field customerName is not set.";
         }
         if (Objects.isNull(customer.getPhone())) {
-            return new CustomResponse<>(404,"Field phone is not set.", null);
+            code = 400;
+            message = "Field phone is not set.";
         }
-        return new CustomResponse<>(200, "Ok", null);
+        return new CustomResponse<>(code, message, null);
+    }
+
+    public CustomResponse<Customer> deleteCustomer(int customerId) {
+        int code = 200;
+        String message = String.format("Successful delete Customer with id %d", customerId);
+        try {
+            component.deleteCustomer(customerId);
+        } catch (EntityNotFoundException e) {
+            code = 404;
+            message = e.getMessage();
+        }
+        return new CustomResponse<>(code,message,null);
     }
 }

@@ -29,7 +29,7 @@ public class CustomerRepository {
         Customer customer = em.find(Customer.class, customerId);
         if (Objects.isNull(customer)) {
             throw new EntityNotFoundException(
-                    String.format("Can't find Customer for ID %d", customerId));
+                    String.format("Can't find Customer with ID %d", customerId));
         }
         return customer;
     }

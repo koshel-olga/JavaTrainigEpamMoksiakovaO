@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.domain.entity;
 
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,23 +33,28 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="product_id", columnDefinition = "serial")
+    @Expose
     private int productId;
 
     /**
      * Product name.
      */
     @Column(name = "product_name")
+    @Expose
     private String productName;
 
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "supplier_id")
+    @Expose
     private Supplier supplier;
 
     @Column(name = "unit_price")
+    @Expose
     private double unitPrice;
 
     @Column(name = "is_discontinued")
+    @Expose
     private boolean isDiscontinued;
 
     /**

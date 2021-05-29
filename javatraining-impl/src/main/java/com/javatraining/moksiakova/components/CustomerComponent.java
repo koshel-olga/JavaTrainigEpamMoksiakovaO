@@ -24,11 +24,12 @@ public class CustomerComponent {
     }
 
     /**
-     * Create {@link Customer}.
-     * @param customerPhone
+     *
      * @param customerName
+     * @param customerPhone
+     * @return
      */
-    public Customer createCustomer(String customerPhone, String customerName) {
+    public Customer createCustomer(String customerName, String customerPhone) {
         Customer customer = new Customer();
         customer.setCustomerName(customerName);
         customer.setPhone(customerPhone);
@@ -50,9 +51,6 @@ public class CustomerComponent {
         repository.save(customer);
         log.info("Successfully update Customer: {}", customer);
         return customer;
-        //} catch (EntityNotFoundException e) {
-        //    log.info("Can not update Customer with Id={}",customerId);
-        //}
     }
 
     /**
@@ -60,14 +58,10 @@ public class CustomerComponent {
      * @param customerId
      * @return
      */
-    public Optional<Customer> findById(int customerId) {
-        try {
-            Customer customer = repository.findOrDie(customerId);
-            return Optional.of(customer);
-        } catch (EntityNotFoundException e) {
-            log.info("Entity Customer with Id={} not found",customerId);
-        }
-        return Optional.empty();
+    public Customer findById(int customerId) throws EntityNotFoundException
+    {
+        Customer customer = repository.findOrDie(customerId);
+        return customer;
     }
 
     /**
@@ -82,13 +76,9 @@ public class CustomerComponent {
      * Delete {@link Customer} by customer_id.
      * @param customerId
      */
-    public void delete(int customerId) {
-        try {
-            Customer customer = repository.findOrDie(customerId);
-            repository.delete(customer);
-            log.info("Successfully delete customer: {}", customer);
-        } catch (EntityNotFoundException e) {
-            log.info("Can not delete Customer with Id={}. Entity not exist.",customerId);
-        }
+    public void deleteCustomer(int customerId) {
+        Customer customer = repository.findOrDie(customerId);
+        repository.delete(customer);
+        log.info("Successfully delete customer: {}", customer);
     }
 }

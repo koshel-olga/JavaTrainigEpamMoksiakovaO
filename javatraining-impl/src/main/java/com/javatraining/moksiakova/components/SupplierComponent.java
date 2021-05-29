@@ -4,8 +4,7 @@ import com.javatraining.moksiakova.domain.entity.Supplier;
 import com.javatraining.moksiakova.repositories.SupplierRepository;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Component for work with {@link Supplier}.
@@ -27,12 +26,13 @@ public class SupplierComponent {
      * @param companyName
      * @param phone
      */
-    public void createSupplier(String companyName, String phone) {
+    public Supplier createSupplier(String companyName, String phone) {
         Supplier supplier = new Supplier();
         supplier.setCompanyName(companyName);
         supplier.setPhone(phone);
         repository.save(supplier);
         log.info("Successfully create Supplier: {}", supplier);
+        return supplier;
     }
 
     /**
@@ -41,16 +41,13 @@ public class SupplierComponent {
      * @param companyName
      * @param phone
      */
-    public void updateSupplier(int supplierId, String companyName, String phone) {
-        try {
-            Supplier supplier = repository.findOrDie(supplierId);
-            supplier.setCompanyName(companyName);
-            supplier.setPhone(phone);
-            repository.save(supplier);
-            log.info("Successfully update Supplier: {}", supplier);
-        } catch (EntityNotFoundException e) {
-            log.info("Can not update Supplier with Id={}",supplierId);
-        }
+    public Supplier updateSupplier(int supplierId, String companyName, String phone) {
+        Supplier supplier = repository.findOrDie(supplierId);
+        supplier.setCompanyName(companyName);
+        supplier.setPhone(phone);
+        repository.save(supplier);
+        log.info("Successfully update Supplier: {}", supplier);
+        return supplier;
     }
 
     /**
@@ -58,27 +55,26 @@ public class SupplierComponent {
      * @param supplierId
      * @return
      */
-    public Optional<Supplier> findById(int supplierId) {
-        try {
-            Supplier supplier = repository.findOrDie(supplierId);
-            return Optional.of(supplier);
-        } catch (EntityNotFoundException e) {
-            log.info("Entity Supplier with Id={} not found. Entity not exist.",supplierId);
-        }
-        return Optional.empty();
+    public Supplier findById(int supplierId) {
+        Supplier supplier = repository.findOrDie(supplierId);
+        return supplier;
+    }
+
+    /**
+     * Find all {@link Supplier}.
+     * @return
+     */
+    public List<Supplier> findAll() {
+        return repository.findAll();
     }
 
     /**
      * Delete {@link Supplier} by supplier_id.
      * @param supplierId
      */
-    public void delete(int supplierId) {
-        try {
-            Supplier supplier = repository.findOrDie(supplierId);
-            repository.delete(supplier);
-            log.info("Successfully delete Supplier: {}", supplier);
-        } catch (EntityNotFoundException e) {
-            log.info("Can not delete Supplier with Id={}. Entity not exist.", supplierId);
-        }
+    public void deleteSupplier(int supplierId) {
+        Supplier supplier = repository.findOrDie(supplierId);
+        repository.delete(supplier);
+        log.info("Successfully delete Supplier: {}", supplier);
     }
 }

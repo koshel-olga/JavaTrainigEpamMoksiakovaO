@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.domain.entity;
 
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,12 +27,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id", columnDefinition = "serial")
+    @Expose
     private int orderId;
 
     /**
      * Order number.
      */
     @Column(name="order_number")
+    @Expose
     private String orderNumber;
 
     /**
@@ -40,18 +43,21 @@ public class Order {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @Expose
     private Customer customer;
 
     /**
      * Order date.
      */
     @Column(name="order_date")
+    @Expose
     private Timestamp orderDate;
 
     /**
      * Price order.
      */
     @Column(name="total_amount")
+    @Expose
     private double totalAmount;
 
     /**

@@ -3,12 +3,9 @@ package com.javatraining.moksiakova.components;
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.domain.entity.Supplier;
 import com.javatraining.moksiakova.repositories.ProductRepository;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Component  for work with {@link Product}.
@@ -25,58 +22,51 @@ public class ProductComponent {
         this.supplierComponent = new SupplierComponent();
     }
 
-    public void createProduct(String productName,
+    public Product createProduct(String productName,
                             int supplierId,
                             double unitPrice) {
-        Optional<Supplier> supplierExist
-                = this.supplierComponent.findById(supplierId);
-        if (supplierExist.isPresent()) {
-            Product product = new Product();
-            product.setProductName(productName);
-            product.setSupplier(supplierExist.get());
-            product.setUnitPrice(unitPrice);
-            product.setDiscontinued(false);
-            repository.save(product);
-            log.info("Successfully create Product: {}", product);
-        } else {
-            log.info("Can not create Product with Supplier with id {}",supplierId);
-        }
+        Supplier supplierExist = this.supplierComponent.findById(supplierId);
+        Product product = new Product();
+        product.setProductName(productName);
+        product.setSupplier(supplierExist);
+        product.setUnitPrice(unitPrice);
+        product.setDiscontinued(false);
+        repository.save(product);
+        log.info("Successfully create Product: {}", product);
+        return product;
     }
 
-    public void updateProduct(int productId,
-                            String productName,
-                            double unitPrice)
+    public Product updateProduct(int productId,
+                                String productName,
+                                double unitPrice,
+                                 int supplierId)
     {
-        Optional<Product> productOptional = this.findById(productId);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            product.setProductName(productName);
-            product.setUnitPrice(unitPrice);
-            repository.save(product);
-            log.info("Successfully update Product: {}", product);
-        } else {
-            log.info("Can not update Product with Id={}",productId);
-        }
+        Supplier supplierExist = this.supplierComponent.findById(supplierId);
+        Product product = this.findById(productId);
+        product.setProductName(productName);
+        product.setUnitPrice(unitPrice);
+        product.setSupplier(supplierExist);
+        repository.save(product);
+        log.info("Successfully update Product: {}", product);
+        return product;
     }
 
-    public Optional<Product> findById(int productId) {
-        try {
-            Product product = repository.findOrDie(productId);
-            return Optional.of(product);
-        } catch (EntityNotFoundException e) {
-            log.info("Entity product with Id={} not found",productId);
-        }
-        return Optional.empty();
+    public Product findById(int productId) {
+        Product product = repository.findOrDie(productId);
+        return product;
     }
 
     public void deleteProduct(int productId) {
-        Optional<Product> productOptional = this.findById(productId);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            repository.delete(product);
-            log.info("Successfully delete product: {}", product);
-        } else {
-            log.info("Can not delete product with Id={}. Entity not exist.", productId);
-        }
+        Product product = this.findById(productId);
+        repository.delete(product);
+        log.info("Successfully delete product: {}", product);
+    }
+
+    /**
+     * Find all {@link Product}.
+     * @return
+     */
+    public List<Product> findAll() {
+        return repository.findAll();
     }
 }

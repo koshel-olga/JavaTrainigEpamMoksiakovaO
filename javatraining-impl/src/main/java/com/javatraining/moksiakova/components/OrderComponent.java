@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,22 +31,21 @@ public class OrderComponent {
      * @param customerId
      * @param totalAmount
      */
-    public void createOrder(String orderNumber,
+    public Order createOrder(String orderNumber,
                             int customerId,
-                            double totalAmount) {
-        Optional<Customer> customerExist
+                            double totalAmount)
+            throws EntityNotFoundException
+    {
+        Customer customerExist
                 = this.customerComponent.findById(customerId);
-        if (customerExist.isPresent()) {
-            Order order = new Order();
-            order.setOrderNumber(orderNumber);
-            order.setCustomer(customerExist.get());
-            order.setOrderDate(new Timestamp(System.currentTimeMillis()));
-            order.setTotalAmount(totalAmount);
-            repository.save(order);
-            log.info("Successfully create Order: {}", order);
-        } else {
-            log.info("Can not create Order with Customer with id {}",customerId);
-        }
+        Order order = new Order();
+        order.setOrderNumber(orderNumber);
+        order.setCustomer(customerExist);
+        order.setOrderDate(new Timestamp(System.currentTimeMillis()));
+        order.setTotalAmount(totalAmount);
+        repository.save(order);
+        log.info("Successfully create Order: {}", order);
+        return order;
     }
 
     /**
@@ -54,20 +54,21 @@ public class OrderComponent {
      * @param orderNumber
      * @param totalAmount
      */
-    public void updateOrder(int orderId,
+    public Order updateOrder(int orderId,
                             String orderNumber,
-                            double totalAmount)
+                            double totalAmount,
+                             int customerId)
+    throws EntityNotFoundException
     {
-        Optional<Order> orderOptional = this.findById(orderId);
-        if (orderOptional.isPresent()) {
-            Order order = orderOptional.get();
-            order.setOrderNumber(orderNumber);
-            order.setTotalAmount(totalAmount);
-            repository.save(order);
-            log.info("Successfully update Order: {}", order);
-        } else {
-            log.info("Can not update Order with Id={}",orderId);
-        }
+        Customer customerExist
+                = this.customerComponent.findById(customerId);
+        Order order = this.findById(orderId);
+        order.setOrderNumber(orderNumber);
+        order.setTotalAmount(totalAmount);
+        order.setCustomer(customerExist);
+        repository.save(order);
+        log.info("Successfully update Order: {}", order);
+        return order;
     }
 
     /**
@@ -75,28 +76,26 @@ public class OrderComponent {
      * @param orderId
      * @return {@link Order}.
      */
-    public Optional<Order> findById(int orderId) {
-        try {
-            Order order = repository.findOrDie(orderId);
-            return Optional.of(order);
-        } catch (EntityNotFoundException e) {
-            log.info("Entity Order with Id={} not found",orderId);
-        }
-        return Optional.empty();
+    public Order findById(int orderId) throws EntityNotFoundException {
+        Order order = repository.findOrDie(orderId);
+        return order;
+    }
+
+    /**
+     * Find all {@link Customer}.
+     * @return
+     */
+    public List<Order> findAll() {
+        return repository.findAll();
     }
 
     /**
      * Delete order by order_id.
      * @param orderId
      */
-    public void deleteOrder(int orderId) {
-        Optional<Order> orderOptional = this.findById(orderId);
-        if (orderOptional.isPresent()) {
-            Order order = orderOptional.get();
-            repository.delete(order);
-            log.info("Successfully delete Order: {}", order);
-        } else {
-            log.info("Can not delete Order with Id={}. Entity not exist.",orderId);
-        }
+    public void deleteOrder(int orderId) throws EntityNotFoundException {
+        Order order = this.findById(orderId);
+        repository.delete(order);
+        log.info("Successfully delete Order: {}", order);
     }
 }
