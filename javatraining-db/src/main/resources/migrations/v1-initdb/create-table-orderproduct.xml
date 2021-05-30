@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="2021-05-21_create_table_OrderProduct" author="olga_moksiakova">
+        <createTable tableName="order_product">
+            <column name="product_id" type="int">
+                <constraints foreignKeyName="fk_product_id" nullable="false"
+                             referencedTableName="product" referencedColumnNames="product_id"/>
+            </column>
+            <column name="order_id" type="int">
+                <constraints foreignKeyName="fk_order_id" nullable="false"
+                             referencedTableName="order" referencedColumnNames="order_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
