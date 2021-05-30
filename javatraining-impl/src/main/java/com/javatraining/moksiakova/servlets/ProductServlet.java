@@ -1,11 +1,8 @@
-package com.javatraining.moksiakova;
+package com.javatraining.moksiakova.servlets;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Product;
-import com.javatraining.moksiakova.services.OrderService;
 import com.javatraining.moksiakova.services.ProductService;
 import lombok.RequiredArgsConstructor;
 

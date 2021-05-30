@@ -1,10 +1,9 @@
-package com.javatraining.moksiakova;
+package com.javatraining.moksiakova.servlets;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.services.SupplierService;
+import com.javatraining.moksiakova.CustomResponse;
+import com.javatraining.moksiakova.domain.entity.Customer;
+import com.javatraining.moksiakova.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-public class SupplierServlet extends CustomHttpServlet {
+public class CustomerServlet extends CustomHttpServlet {
 
-    private final SupplierService service = new SupplierService();
+    private final CustomerService service = new CustomerService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,7 +26,7 @@ public class SupplierServlet extends CustomHttpServlet {
         } catch (NumberFormatException e) {}
 
         if (idCustomer > 0) {
-            customResponse = service.findSupplier(idCustomer);
+            customResponse = service.findCustomer(idCustomer);
         } else {
             customResponse = service.findAll();
         }
@@ -36,23 +35,23 @@ public class SupplierServlet extends CustomHttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Supplier supplier = new Gson().fromJson(request.getReader(), Supplier.class);
-        CustomResponse<Supplier> customResponse = service.createSupplier(supplier);
+        Customer customer = new Gson().fromJson(request.getReader(), Customer.class);
+        CustomResponse<Customer> customResponse = service.createCustomer(customer);
         this.sendResponse(customResponse, response);
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Supplier supplier = new Gson().fromJson(request.getReader(), Supplier.class);
-        CustomResponse<Supplier> customResponse = service.updateSupplier(supplier);
+        Customer customer = new Gson().fromJson(request.getReader(), Customer.class);
+        CustomResponse<Customer> customResponse = service.updateCustomer(customer);
         this.sendResponse(customResponse, response);
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
-            Supplier supplier = new Gson().fromJson(request.getReader(), Supplier.class);
-            CustomResponse<Supplier> customResponse = service.deleteSupplier(supplier.getSupplierId());
+            Customer customer = new Gson().fromJson(request.getReader(), Customer.class);
+            CustomResponse<Customer> customResponse = service.deleteCustomer(customer.getCustomerId());
             this.sendResponse(customResponse, response);
         } catch (Exception e) {
             CustomResponse<?> customResponse = new CustomResponse<>(400,e.getMessage(), null);

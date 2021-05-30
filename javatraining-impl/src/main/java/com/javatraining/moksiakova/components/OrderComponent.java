@@ -2,13 +2,14 @@ package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.domain.entity.Product;
+import com.javatraining.moksiakova.payload.OrderPayload;
 import com.javatraining.moksiakova.repositories.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Component  for work with {@link Order}.
@@ -16,56 +17,62 @@ import java.util.Optional;
 @Slf4j
 public class OrderComponent {
 
-    private OrderRepository repository;
+    private final OrderRepository repository;
 
-    private CustomerComponent customerComponent;
+    private final CustomerComponent customerComponent;
+
+    private final ProductComponent productComponent;
 
     public OrderComponent() {
         this.repository = new OrderRepository();
         this.customerComponent = new CustomerComponent();
+        this.productComponent = new ProductComponent();
     }
 
     /**
-     * Create order.
-     * @param orderNumber
-     * @param customerId
-     * @param totalAmount
+     *
+     * @param orderPayload
+     * @return
+     * @throws EntityNotFoundException
      */
-    public Order createOrder(String orderNumber,
-                            int customerId,
-                            double totalAmount)
+    public Order createOrder(OrderPayload orderPayload)
             throws EntityNotFoundException
     {
         Customer customerExist
-                = this.customerComponent.findById(customerId);
+                = this.customerComponent.findById(orderPayload.getCustomerId());
         Order order = new Order();
-        order.setOrderNumber(orderNumber);
+        order.setOrderNumber(orderPayload.getOrderNumber());
         order.setCustomer(customerExist);
         order.setOrderDate(new Timestamp(System.currentTimeMillis()));
-        order.setTotalAmount(totalAmount);
+        order.setTotalAmount(orderPayload.getTotalAmount());
+        List<Product> products = new ArrayList<>();
+        orderPayload.getProducts().forEach( productId -> {
+                Product product = productComponent.findById(productId);
+                products.add(product);
+            }
+        );
+        order.setProducts(products);
         repository.save(order);
         log.info("Successfully create Order: {}", order);
         return order;
     }
 
     /**
-     * Update order by order_id.
-     * @param orderId
-     * @param orderNumber
-     * @param totalAmount
+     *
+     * @param orderPayload
+     * @return
+     * @throws EntityNotFoundException
      */
-    public Order updateOrder(int orderId,
-                            String orderNumber,
-                            double totalAmount,
-                             int customerId)
+    public Order updateOrder(OrderPayload orderPayload)
     throws EntityNotFoundException
     {
         Customer customerExist
-                = this.customerComponent.findById(customerId);
-        Order order = this.findById(orderId);
-        order.setOrderNumber(orderNumber);
-        order.setTotalAmount(totalAmount);
+                = this.customerComponent.findById(orderPayload.getCustomerId());
+        Order order = this.findById(orderPayload.getOrderId());
+        order.setOrderNumber(orderPayload.getOrderNumber());
+        order.setTotalAmount(orderPayload.getTotalAmount());
         order.setCustomer(customerExist);
+        order.setProducts(this.addProducts(orderPayload));
         repository.save(order);
         log.info("Successfully update Order: {}", order);
         return order;
@@ -97,5 +104,15 @@ public class OrderComponent {
         Order order = this.findById(orderId);
         repository.delete(order);
         log.info("Successfully delete Order: {}", order);
+    }
+
+    private List<Product> addProducts(OrderPayload  orderPayload) {
+        List<Product> products = new ArrayList<>();
+        orderPayload.getProducts().forEach( productId -> {
+                    Product product = productComponent.findById(productId);
+                    products.add(product);
+                }
+        );
+        return products;
     }
 }

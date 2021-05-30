@@ -1,9 +1,9 @@
-package com.javatraining.moksiakova;
+package com.javatraining.moksiakova.servlets;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
+import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.payload.OrderPayload;
 import com.javatraining.moksiakova.services.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class OrderServlet extends CustomHttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Order order = new Gson().fromJson(request.getReader(), Order.class);
+            OrderPayload order = new Gson().fromJson(request.getReader(), OrderPayload.class);
             CustomResponse<Order> customResponse = service.createOrder(order);
             this.sendResponse(customResponse, response);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class OrderServlet extends CustomHttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Order order = new Gson().fromJson(request.getReader(), Order.class);
+            OrderPayload order = new Gson().fromJson(request.getReader(), OrderPayload.class);
             CustomResponse<Order> customResponse = service.updateOrder(order);
             this.sendResponse(customResponse, response);
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class OrderServlet extends CustomHttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
-            Order order = new Gson().fromJson(request.getReader(), Order.class);
+            OrderPayload order = new Gson().fromJson(request.getReader(), OrderPayload.class);
             CustomResponse<Order> customResponse = service.deleteOrder(order.getOrderId());
             this.sendResponse(customResponse, response);
         } catch (Exception e) {

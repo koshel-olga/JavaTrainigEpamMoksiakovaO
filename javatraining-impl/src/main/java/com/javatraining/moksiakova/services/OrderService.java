@@ -3,6 +3,7 @@ package com.javatraining.moksiakova.services;
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.components.OrderComponent;
 import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.payload.OrderPayload;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,15 +28,11 @@ public class OrderService {
         return new CustomResponse<>(200, "Ok", customers);
     }
 
-    public CustomResponse<Order> createOrder(Order order) {
+    public CustomResponse<Order> createOrder(OrderPayload order) {
         CustomResponse<Order> customResponse = this.validateParams(order);
         if (customResponse.getCode() == 200) {
             try {
-                Order newOrder = component.createOrder(
-                    order.getOrderNumber(),
-                    order.getCustomer().getCustomerId(),
-                    order.getTotalAmount()
-                );
+                Order newOrder = component.createOrder(order);
                 customResponse.setEntity(newOrder); }
             catch (EntityNotFoundException e) {
                 customResponse.setCode(404);
@@ -45,16 +42,11 @@ public class OrderService {
         return customResponse;
     }
 
-    public CustomResponse<Order> updateOrder(Order order) {
+    public CustomResponse<Order> updateOrder(OrderPayload order) {
         CustomResponse<Order> customResponse = this.validateParams(order);
         if (customResponse.getCode() == 200) {
             try {
-                Order updateOrder = component.updateOrder(
-                        order.getOrderId(),
-                        order.getOrderNumber(),
-                        order.getTotalAmount(),
-                        order.getCustomer().getCustomerId()
-                );
+                Order updateOrder = component.updateOrder(order);
                 customResponse.setEntity(updateOrder);
             } catch (EntityNotFoundException e) {
                 customResponse.setCode(404);
@@ -76,7 +68,7 @@ public class OrderService {
         return new CustomResponse<>(code,message,null);
     }
 
-    private CustomResponse<Order> validateParams(Order order) {
+    private CustomResponse<Order> validateParams(OrderPayload order) {
         int code = 200;
         String message = "Ok";
         if (Objects.isNull(order.getOrderNumber())) {
@@ -87,7 +79,7 @@ public class OrderService {
             code = 400;
             message = "Field totalAmount is not set.";
         }
-        if (Objects.isNull(order.getCustomer())) {
+        if (Objects.isNull(order.getCustomerId())) {
             code = 400;
             message = "Field customer is not set.";
         }

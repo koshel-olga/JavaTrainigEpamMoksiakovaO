@@ -1,7 +1,8 @@
-package com.javatraining.moksiakova;
+package com.javatraining.moksiakova.servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.javatraining.moksiakova.CustomResponse;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
