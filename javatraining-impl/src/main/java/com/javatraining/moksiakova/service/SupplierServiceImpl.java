@@ -1,17 +1,20 @@
-package com.javatraining.moksiakova.services;
+package com.javatraining.moksiakova.service;
 
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.components.SupplierComponent;
 import com.javatraining.moksiakova.domain.entity.Supplier;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
-public class SupplierService {
-    private final SupplierComponent component = new SupplierComponent();
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class SupplierServiceImpl {
+    private final SupplierComponent component;
 
     public CustomResponse<Supplier> findSupplier(int supplierId) {
         try {

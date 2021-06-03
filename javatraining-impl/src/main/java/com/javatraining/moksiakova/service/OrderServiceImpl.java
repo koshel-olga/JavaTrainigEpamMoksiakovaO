@@ -1,18 +1,21 @@
-package com.javatraining.moksiakova.services;
+package com.javatraining.moksiakova.service;
 
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.components.OrderComponent;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.payload.OrderPayload;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
-public class OrderService {
-    private final OrderComponent component = new OrderComponent();
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class OrderServiceImpl {
+    private final OrderComponent component;
 
     public CustomResponse<Order> findOrder(int orderId) {
         try {

@@ -1,18 +1,21 @@
-package com.javatraining.moksiakova.services;
+package com.javatraining.moksiakova.service;
 
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.components.CustomerComponent;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
-public class CustomerService {
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class CustomerServiceImpl {
 
-    private final CustomerComponent component = new CustomerComponent();
+    private final CustomerComponent component;
 
     public CustomResponse<Customer> findCustomer(int customerId) {
         try {

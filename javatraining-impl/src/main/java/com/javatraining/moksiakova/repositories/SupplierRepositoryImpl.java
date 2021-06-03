@@ -1,8 +1,9 @@
 package com.javatraining.moksiakova.repositories;
 
-import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Supplier;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,10 +15,11 @@ import java.util.Objects;
 /**
  * class for work with table supplier in Database.
  */
-@RequiredArgsConstructor
-public class SupplierRepository {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("javatraining-unit");
-    private EntityManager em = emf.createEntityManager();
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class SupplierRepositoryImpl {
+
+    private EntityManager entityManager;
 
     /**
      * Find {@link Supplier} in database by id.
@@ -26,7 +28,7 @@ public class SupplierRepository {
      * @throws EntityNotFoundException
      */
     public Supplier findOrDie(int supplierId) throws EntityNotFoundException {
-        Supplier supplier = em.find(Supplier.class, supplierId);
+        Supplier supplier = entityManager.find(Supplier.class, supplierId);
         if (Objects.isNull(supplier)) {
             throw new EntityNotFoundException(
                     String.format("Can't find Supplier for ID %d", supplierId));
@@ -39,7 +41,7 @@ public class SupplierRepository {
      * @return list of Supplier.
      */
     public List<Supplier> findAll() {
-        List<Supplier> suppliers = em.createQuery("Select a From Supplier a", Supplier.class).getResultList();
+        List<Supplier> suppliers = entityManager.createQuery("Select a From Supplier a", Supplier.class).getResultList();
         return suppliers;
     }
 
@@ -48,9 +50,9 @@ public class SupplierRepository {
      * @param supplier
      */
     public void save(Supplier supplier) {
-        em.getTransaction().begin();
-        em.persist(supplier);
-        em.getTransaction().commit();
+        entityManager.getTransaction().begin();
+        entityManager.persist(supplier);
+        entityManager.getTransaction().commit();
     }
 
     /**
@@ -58,8 +60,8 @@ public class SupplierRepository {
      * @param supplier
      */
     public void delete(Supplier supplier) {
-        em.getTransaction().begin();
-        em.remove(supplier);
-        em.getTransaction().commit();
+        entityManager.getTransaction().begin();
+        entityManager.remove(supplier);
+        entityManager.getTransaction().commit();
     }
 }

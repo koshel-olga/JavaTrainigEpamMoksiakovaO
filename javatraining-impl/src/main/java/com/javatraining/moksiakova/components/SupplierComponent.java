@@ -1,8 +1,11 @@
 package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.repositories.SupplierRepository;
+import com.javatraining.moksiakova.repositories.SupplierRepositoryImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,16 +13,14 @@ import java.util.List;
  * Component for work with {@link Supplier}.
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SupplierComponent {
 
     /**
      * Component for work with table in database.
      */
-    private SupplierRepository repository;
-
-    public SupplierComponent() {
-        this.repository = new SupplierRepository();
-    }
+    private SupplierRepositoryImpl repository;
 
     /**
      * Create {@link Supplier}.

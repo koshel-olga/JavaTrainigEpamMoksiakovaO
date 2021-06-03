@@ -1,27 +1,27 @@
 package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Customer;
-import com.javatraining.moksiakova.repositories.CustomerRepository;
+import com.javatraining.moksiakova.repositories.CustomerRepositoryImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Component for work with {@link Customer}.
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomerComponent {
 
     /**
      * Component for work with table in database.
      */
-    private CustomerRepository repository;
-
-    public CustomerComponent() {
-        this.repository = new CustomerRepository();
-    }
+    private CustomerRepositoryImpl repository;
 
     /**
      *

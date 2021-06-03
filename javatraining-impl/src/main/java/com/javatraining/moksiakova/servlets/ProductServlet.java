@@ -3,16 +3,19 @@ package com.javatraining.moksiakova.servlets;
 import com.google.gson.Gson;
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Product;
-import com.javatraining.moksiakova.services.ProductService;
+import com.javatraining.moksiakova.service.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RequiredArgsConstructor
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductServlet extends CustomHttpServlet {
-    private final ProductService service = new ProductService();
+    private final ProductServiceImpl service;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

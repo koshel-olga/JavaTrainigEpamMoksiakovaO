@@ -2,8 +2,11 @@ package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.repositories.ProductRepository;
+import com.javatraining.moksiakova.repositories.ProductRepositoryImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -11,16 +14,13 @@ import java.util.List;
  * Component  for work with {@link Product}.
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductComponent {
 
-    private ProductRepository repository;
+    private ProductRepositoryImpl repository;
 
     private SupplierComponent supplierComponent;
-
-    public ProductComponent() {
-        this.repository = new ProductRepository();
-        this.supplierComponent = new SupplierComponent();
-    }
 
     public Product createProduct(String productName,
                             int supplierId,

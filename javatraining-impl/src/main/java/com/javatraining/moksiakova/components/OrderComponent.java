@@ -4,8 +4,10 @@ import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.payload.OrderPayload;
-import com.javatraining.moksiakova.repositories.OrderRepository;
+import com.javatraining.moksiakova.repositories.OrderRepositoryImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
@@ -15,19 +17,14 @@ import java.util.*;
  * Component  for work with {@link Order}.
  */
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderComponent {
 
-    private final OrderRepository repository;
+    private final OrderRepositoryImpl repository;
 
     private final CustomerComponent customerComponent;
 
     private final ProductComponent productComponent;
-
-    public OrderComponent() {
-        this.repository = new OrderRepository();
-        this.customerComponent = new CustomerComponent();
-        this.productComponent = new ProductComponent();
-    }
 
     /**
      *
