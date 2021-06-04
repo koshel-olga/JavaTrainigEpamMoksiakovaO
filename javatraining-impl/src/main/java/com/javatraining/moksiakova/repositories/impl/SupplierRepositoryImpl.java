@@ -1,6 +1,7 @@
-package com.javatraining.moksiakova.repositories;
+package com.javatraining.moksiakova.repositories.impl;
 
 import com.javatraining.moksiakova.domain.entity.Supplier;
+import com.javatraining.moksiakova.repositories.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,17 +17,12 @@ import java.util.Objects;
  * class for work with table supplier in Database.
  */
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SupplierRepositoryImpl {
+@RequiredArgsConstructor
+public class SupplierRepositoryImpl implements SupplierRepository {
 
     private EntityManager entityManager;
 
-    /**
-     * Find {@link Supplier} in database by id.
-     * @param supplierId identification of supplier.
-     * @return {@link Supplier}.
-     * @throws EntityNotFoundException
-     */
+    @Override
     public Supplier findOrDie(int supplierId) throws EntityNotFoundException {
         Supplier supplier = entityManager.find(Supplier.class, supplierId);
         if (Objects.isNull(supplier)) {
@@ -36,29 +32,20 @@ public class SupplierRepositoryImpl {
         return supplier;
     }
 
-    /**
-     * Get collection {@link Supplier} in database.
-     * @return list of Supplier.
-     */
+    @Override
     public List<Supplier> findAll() {
         List<Supplier> suppliers = entityManager.createQuery("Select a From Supplier a", Supplier.class).getResultList();
         return suppliers;
     }
 
-    /**
-     * Save {@link Supplier} in database.
-     * @param supplier
-     */
+    @Override
     public void save(Supplier supplier) {
         entityManager.getTransaction().begin();
         entityManager.persist(supplier);
         entityManager.getTransaction().commit();
     }
 
-    /**
-     * Delete {@link Supplier} from database by supplier_id.
-     * @param supplier
-     */
+    @Override
     public void delete(Supplier supplier) {
         entityManager.getTransaction().begin();
         entityManager.remove(supplier);

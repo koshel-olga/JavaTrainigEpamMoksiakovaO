@@ -1,8 +1,9 @@
-package com.javatraining.moksiakova.service;
+package com.javatraining.moksiakova.service.impl;
 
 import com.javatraining.moksiakova.CustomResponse;
-import com.javatraining.moksiakova.components.ProductComponent;
+import com.javatraining.moksiakova.components.impl.ProductComponentImpl;
 import com.javatraining.moksiakova.domain.entity.Product;
+import com.javatraining.moksiakova.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ProductServiceImpl {
-    private final ProductComponent component;
+public class ProductServiceImpl implements ProductService {
+    private final ProductComponentImpl component;
 
     public CustomResponse<Product> findProduct(int productId) {
         try {

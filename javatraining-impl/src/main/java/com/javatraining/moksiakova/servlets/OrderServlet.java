@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.payload.OrderPayload;
-import com.javatraining.moksiakova.service.OrderServiceImpl;
+import com.javatraining.moksiakova.service.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class OrderServlet extends CustomHttpServlet {
 
     private final OrderServiceImpl service;

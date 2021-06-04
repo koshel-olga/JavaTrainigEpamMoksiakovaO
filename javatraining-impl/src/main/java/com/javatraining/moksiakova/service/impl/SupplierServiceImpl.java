@@ -1,8 +1,9 @@
-package com.javatraining.moksiakova.service;
+package com.javatraining.moksiakova.service.impl;
 
 import com.javatraining.moksiakova.CustomResponse;
-import com.javatraining.moksiakova.components.SupplierComponent;
+import com.javatraining.moksiakova.components.impl.SupplierComponentImpl;
 import com.javatraining.moksiakova.domain.entity.Supplier;
+import com.javatraining.moksiakova.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,9 +14,11 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SupplierServiceImpl {
-    private final SupplierComponent component;
+public class SupplierServiceImpl implements SupplierService {
 
+    private final SupplierComponentImpl component;
+
+    @Override
     public CustomResponse<Supplier> findSupplier(int supplierId) {
         try {
             Supplier supplier = component.findById(supplierId);
@@ -25,11 +28,13 @@ public class SupplierServiceImpl {
         }
     }
 
+    @Override
     public CustomResponse<List<Supplier>> findAll() {
         List<Supplier> suppliers = component.findAll();
         return new CustomResponse<>(200, "Ok", suppliers);
     }
 
+    @Override
     public CustomResponse<Supplier> createSupplier(Supplier supplier) {
         CustomResponse<Supplier> customResponse = this.validateParams(supplier);
         if (customResponse.getCode() == 200) {
@@ -40,6 +45,7 @@ public class SupplierServiceImpl {
         return customResponse;
     }
 
+    @Override
     public CustomResponse<Supplier> updateSupplier(Supplier supplier) {
         CustomResponse<Supplier> customResponse = this.validateParams(supplier);
         if (customResponse.getCode() == 200) {
@@ -57,6 +63,7 @@ public class SupplierServiceImpl {
         return customResponse;
     }
 
+    @Override
     public CustomResponse<Supplier> deleteSupplier(int supplierId) {
         int code = 200;
         String message = String.format("Successful delete Supplier with id %d", supplierId);

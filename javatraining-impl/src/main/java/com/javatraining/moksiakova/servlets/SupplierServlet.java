@@ -3,7 +3,7 @@ package com.javatraining.moksiakova.servlets;
 import com.google.gson.Gson;
 import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.service.SupplierServiceImpl;
+import com.javatraining.moksiakova.service.impl.SupplierServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class SupplierServlet extends CustomHttpServlet {
 
     private final SupplierServiceImpl service;

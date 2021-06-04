@@ -1,9 +1,10 @@
-package com.javatraining.moksiakova.service;
+package com.javatraining.moksiakova.service.impl;
 
 import com.javatraining.moksiakova.CustomResponse;
-import com.javatraining.moksiakova.components.OrderComponent;
+import com.javatraining.moksiakova.components.impl.OrderComponentImpl;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.payload.OrderPayload;
+import com.javatraining.moksiakova.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,8 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OrderServiceImpl {
-    private final OrderComponent component;
+public class OrderServiceImpl implements OrderService {
+    private final OrderComponentImpl component;
 
     public CustomResponse<Order> findOrder(int orderId) {
         try {
@@ -26,11 +27,13 @@ public class OrderServiceImpl {
         }
     }
 
+    @Override
     public CustomResponse<List<Order>> findAll() {
         List<Order> customers = component.findAll();
         return new CustomResponse<>(200, "Ok", customers);
     }
 
+    @Override
     public CustomResponse<Order> createOrder(OrderPayload order) {
         CustomResponse<Order> customResponse = this.validateParams(order);
         if (customResponse.getCode() == 200) {
@@ -45,6 +48,7 @@ public class OrderServiceImpl {
         return customResponse;
     }
 
+    @Override
     public CustomResponse<Order> updateOrder(OrderPayload order) {
         CustomResponse<Order> customResponse = this.validateParams(order);
         if (customResponse.getCode() == 200) {
@@ -59,6 +63,7 @@ public class OrderServiceImpl {
         return customResponse;
     }
 
+    @Override
     public CustomResponse<Order> deleteOrder(int orderId) {
         int code = 200;
         String message = String.format("Successful delete Order with id %d", orderId);

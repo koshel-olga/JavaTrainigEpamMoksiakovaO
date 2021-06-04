@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @Configuration
-@ComponentScan("com.javatraining.moksiakova")
+@ComponentScan({"com.javatraining.moksiakova"})
 public class EntityManagerConfig {
 
     @Bean

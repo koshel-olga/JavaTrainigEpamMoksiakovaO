@@ -1,6 +1,7 @@
-package com.javatraining.moksiakova.repositories;
+package com.javatraining.moksiakova.repositories.impl;
 
 import com.javatraining.moksiakova.domain.entity.Customer;
+import com.javatraining.moksiakova.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.Objects;
  * class for work with table customer in Database.
  */
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     private final EntityManager entityManager;

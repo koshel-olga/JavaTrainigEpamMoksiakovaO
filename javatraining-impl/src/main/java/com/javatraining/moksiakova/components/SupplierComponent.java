@@ -1,40 +1,17 @@
 package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.repositories.SupplierRepositoryImpl;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Component for work with {@link Supplier}.
- */
-@Slf4j
-@Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SupplierComponent {
-
-    /**
-     * Component for work with table in database.
-     */
-    private SupplierRepositoryImpl repository;
+public interface SupplierComponent {
 
     /**
      * Create {@link Supplier}.
      * @param companyName
      * @param phone
      */
-    public Supplier createSupplier(String companyName, String phone) {
-        Supplier supplier = new Supplier();
-        supplier.setCompanyName(companyName);
-        supplier.setPhone(phone);
-        repository.save(supplier);
-        log.info("Successfully create Supplier: {}", supplier);
-        return supplier;
-    }
+    Supplier createSupplier(String companyName, String phone);
 
     /**
      * Update {@link Supplier} by supplier_id.
@@ -42,40 +19,24 @@ public class SupplierComponent {
      * @param companyName
      * @param phone
      */
-    public Supplier updateSupplier(int supplierId, String companyName, String phone) {
-        Supplier supplier = repository.findOrDie(supplierId);
-        supplier.setCompanyName(companyName);
-        supplier.setPhone(phone);
-        repository.save(supplier);
-        log.info("Successfully update Supplier: {}", supplier);
-        return supplier;
-    }
+    Supplier updateSupplier(int supplierId, String companyName, String phone);
 
     /**
      * Find {@link Supplier} by supplier_id.
      * @param supplierId
      * @return
      */
-    public Supplier findById(int supplierId) {
-        Supplier supplier = repository.findOrDie(supplierId);
-        return supplier;
-    }
+    Supplier findById(int supplierId);
 
     /**
      * Find all {@link Supplier}.
      * @return
      */
-    public List<Supplier> findAll() {
-        return repository.findAll();
-    }
+    List<Supplier> findAll();
 
     /**
      * Delete {@link Supplier} by supplier_id.
      * @param supplierId
      */
-    public void deleteSupplier(int supplierId) {
-        Supplier supplier = repository.findOrDie(supplierId);
-        repository.delete(supplier);
-        log.info("Successfully delete Supplier: {}", supplier);
-    }
+    void deleteSupplier(int supplierId);
 }

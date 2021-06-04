@@ -1,6 +1,7 @@
-package com.javatraining.moksiakova.repositories;
+package com.javatraining.moksiakova.repositories.impl;
 
 import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,12 @@ import java.util.Objects;
  * class for work with table order in Database.
  */
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OrderRepositoryImpl {
+@RequiredArgsConstructor
+public class OrderRepositoryImpl implements OrderRepository {
 
     private EntityManager entityManager;
 
+    @Override
     public Order findOrDie(int orderId) {
         Order order = entityManager.find(Order.class, orderId);
         if (Objects.isNull(order)) {
@@ -28,21 +30,20 @@ public class OrderRepositoryImpl {
         return order;
     }
 
-    /**
-     * Get collection {@link Order} in database.
-     * @return list of orders.
-     */
+    @Override
     public List<Order> findAll() {
         List<Order> orders = entityManager.createQuery("Select a From Order a", Order.class).getResultList();
         return orders;
     }
 
+    @Override
     public void save(Order order) {
         entityManager.getTransaction().begin();
         entityManager.persist(order);
         entityManager.getTransaction().commit();
     }
 
+    @Override
     public void delete(Order order) {
         entityManager.getTransaction().begin();
         entityManager.remove(order);

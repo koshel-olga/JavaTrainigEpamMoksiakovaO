@@ -2,114 +2,43 @@ package com.javatraining.moksiakova.components;
 
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Order;
-import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.payload.OrderPayload;
-import com.javatraining.moksiakova.repositories.OrderRepositoryImpl;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
 
-/**
- * Component  for work with {@link Order}.
- */
-@Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OrderComponent {
-
-    private final OrderRepositoryImpl repository;
-
-    private final CustomerComponent customerComponent;
-
-    private final ProductComponent productComponent;
+public interface OrderComponent {
 
     /**
-     *
      * @param orderPayload
      * @return
      * @throws EntityNotFoundException
      */
-    public Order createOrder(OrderPayload orderPayload)
-            throws EntityNotFoundException
-    {
-        Customer customerExist
-                = this.customerComponent.findById(orderPayload.getCustomerId());
-        Order order = new Order();
-        order.setOrderNumber(orderPayload.getOrderNumber());
-        order.setCustomer(customerExist);
-        order.setOrderDate(new Timestamp(System.currentTimeMillis()));
-        order.setTotalAmount(orderPayload.getTotalAmount());
-        List<Product> products = new ArrayList<>();
-        orderPayload.getProducts().forEach( productId -> {
-                Product product = productComponent.findById(productId);
-                products.add(product);
-            }
-        );
-        order.setProducts(products);
-        repository.save(order);
-        log.info("Successfully create Order: {}", order);
-        return order;
-    }
+    Order createOrder(OrderPayload orderPayload);
 
     /**
-     *
      * @param orderPayload
      * @return
      * @throws EntityNotFoundException
      */
-    public Order updateOrder(OrderPayload orderPayload)
-    throws EntityNotFoundException
-    {
-        Customer customerExist
-                = this.customerComponent.findById(orderPayload.getCustomerId());
-        Order order = this.findById(orderPayload.getOrderId());
-        order.setOrderNumber(orderPayload.getOrderNumber());
-        order.setTotalAmount(orderPayload.getTotalAmount());
-        order.setCustomer(customerExist);
-        order.setProducts(this.addProducts(orderPayload));
-        repository.save(order);
-        log.info("Successfully update Order: {}", order);
-        return order;
-    }
+    Order updateOrder(OrderPayload orderPayload) throws EntityNotFoundException;
 
     /**
      * Find order by order_id.
      * @param orderId
      * @return {@link Order}.
      */
-    public Order findById(int orderId) throws EntityNotFoundException {
-        Order order = repository.findOrDie(orderId);
-        return order;
-    }
+    Order findById(int orderId) throws EntityNotFoundException;
 
     /**
      * Find all {@link Customer}.
      * @return
      */
-    public List<Order> findAll() {
-        return repository.findAll();
-    }
+    List<Order> findAll();
 
     /**
      * Delete order by order_id.
      * @param orderId
      */
-    public void deleteOrder(int orderId) throws EntityNotFoundException {
-        Order order = this.findById(orderId);
-        repository.delete(order);
-        log.info("Successfully delete Order: {}", order);
-    }
-
-    private List<Product> addProducts(OrderPayload  orderPayload) {
-        List<Product> products = new ArrayList<>();
-        orderPayload.getProducts().forEach( productId -> {
-                    Product product = productComponent.findById(productId);
-                    products.add(product);
-                }
-        );
-        return products;
-    }
+    void deleteOrder(int orderId) throws EntityNotFoundException;
 }
