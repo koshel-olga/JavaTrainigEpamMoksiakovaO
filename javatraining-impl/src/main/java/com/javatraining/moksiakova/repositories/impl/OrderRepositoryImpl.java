@@ -3,7 +3,7 @@ package com.javatraining.moksiakova.repositories.impl;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -16,9 +16,10 @@ import java.util.Objects;
  */
 @Component
 @RequiredArgsConstructor
+@Profile("!local")
 public class OrderRepositoryImpl implements OrderRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     public Order findOrDie(int orderId) {

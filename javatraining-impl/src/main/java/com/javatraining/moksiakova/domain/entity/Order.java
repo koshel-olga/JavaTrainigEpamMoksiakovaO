@@ -63,6 +63,7 @@ public class Order {
     /**
      * Products by order.
      */
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable (
             name = "order_product",

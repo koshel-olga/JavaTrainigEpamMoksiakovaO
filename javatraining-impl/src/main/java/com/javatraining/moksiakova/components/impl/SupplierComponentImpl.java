@@ -2,9 +2,10 @@ package com.javatraining.moksiakova.components.impl;
 
 import com.javatraining.moksiakova.components.SupplierComponent;
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.repositories.impl.SupplierRepositoryImpl;
+import com.javatraining.moksiakova.repositories.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class SupplierComponentImpl implements SupplierComponent {
     /**
      * Component for work with table in database.
      */
-    private SupplierRepositoryImpl repository;
+    @Autowired
+    private SupplierRepository repository;
 
     @Override
     public Supplier createSupplier(String companyName, String phone) {

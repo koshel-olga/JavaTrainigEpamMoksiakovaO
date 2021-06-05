@@ -1,31 +1,36 @@
 package com.javatraining.moksiakova.components.impl;
 
+import com.javatraining.moksiakova.components.CustomerComponent;
 import com.javatraining.moksiakova.components.OrderComponent;
+import com.javatraining.moksiakova.components.ProductComponent;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.payload.OrderPayload;
-import com.javatraining.moksiakova.repositories.impl.OrderRepositoryImpl;
+import com.javatraining.moksiakova.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Component  for work with {@link Order}.
  */
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class OrderComponentImpl implements OrderComponent {
 
-    private final OrderRepositoryImpl repository;
+    private final OrderRepository repository;
 
-    private final CustomerComponentImpl customerComponent;
+    private final CustomerComponent customerComponent;
 
-    private final ProductComponentImpl productComponent;
+    private final ProductComponent productComponent;
 
     @Override
     public Order createOrder(OrderPayload orderPayload)

@@ -4,6 +4,7 @@ import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -16,8 +17,10 @@ import java.util.Objects;
  */
 @Component
 @RequiredArgsConstructor
+@Profile("!local")
 public class CustomerRepositoryImpl implements CustomerRepository {
 
+    @Autowired
     private final EntityManager entityManager;
 
     @Override

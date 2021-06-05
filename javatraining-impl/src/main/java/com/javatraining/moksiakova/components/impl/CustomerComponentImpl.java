@@ -2,7 +2,7 @@ package com.javatraining.moksiakova.components.impl;
 
 import com.javatraining.moksiakova.components.CustomerComponent;
 import com.javatraining.moksiakova.domain.entity.Customer;
-import com.javatraining.moksiakova.repositories.impl.CustomerRepositoryImpl;
+import com.javatraining.moksiakova.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,8 @@ public class CustomerComponentImpl implements CustomerComponent {
     /**
      * Component for work with table in database.
      */
-    private CustomerRepositoryImpl repository;
+    @Autowired
+    private CustomerRepository repository;
 
     @Override
     public Customer createCustomer(String customerName, String customerPhone) {

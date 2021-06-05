@@ -1,9 +1,10 @@
 package com.javatraining.moksiakova.components.impl;
 
 import com.javatraining.moksiakova.components.ProductComponent;
+import com.javatraining.moksiakova.components.SupplierComponent;
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.domain.entity.Supplier;
-import com.javatraining.moksiakova.repositories.impl.ProductRepositoryImpl;
+import com.javatraining.moksiakova.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductComponentImpl implements ProductComponent {
 
-    private ProductRepositoryImpl repository;
+    private final ProductRepository repository;
 
-    private SupplierComponentImpl supplierComponent;
+    private final SupplierComponent supplierComponent;
 
     @Override
     public Product createProduct(String productName,

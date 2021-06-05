@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class Customer {
     @Expose
     private String phone;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> customerOrders = new ArrayList<>();
 }

@@ -5,18 +5,24 @@ import com.javatraining.moksiakova.CustomResponse;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.service.impl.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+@Controller
 @RequiredArgsConstructor
 public class CustomerServlet extends CustomHttpServlet {
 
     private final CustomerServiceImpl service;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
