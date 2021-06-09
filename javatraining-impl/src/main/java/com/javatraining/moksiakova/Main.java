@@ -1,27 +1,37 @@
 package com.javatraining.moksiakova;
 
-import com.javatraining.moksiakova.config.ApplicationConfig;
-import com.javatraining.moksiakova.domain.entity.Customer;
-import com.javatraining.moksiakova.locale.SetLocale;
-import com.javatraining.moksiakova.repositories.CustomerRepository;
-import com.javatraining.moksiakova.repositories.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
-import java.util.List;
-import java.util.Locale;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 
 @Slf4j
-public class Main {
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext appContext =  new AnnotationConfigApplicationContext(
-                ApplicationConfig.class);
+public class Main implements WebApplicationInitializer {
 
-        CustomerRepository customerRepo = appContext.getBean(CustomerRepository.class);
-        List<Customer> customers = customerRepo.findAll();
-        log.info("Find customer in local profile EN {}",customers);
-        SetLocale setLocale = appContext.getBean(SetLocale.class);
-        setLocale.setLocale(new Locale("ru"));
-        log.info("Find customer in local profile RU {}", customerRepo.findAll());
+    @Override
+    public void onStartup(ServletContext servletContext) {
+        // Создаём корневой контекст
+        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        rootContext.scan("com.javatraining.moksiakova");
+
+        // Передаём управление жизненным циклом корневого контекста Сервлет контексту
+        servletContext.addListener(new ContextLoaderListener(rootContext));
+
+        // Создаём контекст для dispatcher servlet'а
+        AnnotationConfigWebApplicationContext dispatcherContext =
+                new AnnotationConfigWebApplicationContext();
+        dispatcherContext.scan("com.epam.rd");
+
+        // Регистрируем dispatcher servlet
+        ServletRegistration.Dynamic dispatcher =
+                servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/*");
+
+        log.info("Application is running");
     }
 }
