@@ -1,6 +1,9 @@
 package com.javatraining.moksiakova.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -11,6 +14,9 @@ import java.util.Set;
  */
 @Component
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CustomerDTO {
 
     private int customerId;
@@ -20,4 +26,5 @@ public class CustomerDTO {
     private String phone;
 
     private Set<OrderDTO> customerOrders = new HashSet<>();
+
 }

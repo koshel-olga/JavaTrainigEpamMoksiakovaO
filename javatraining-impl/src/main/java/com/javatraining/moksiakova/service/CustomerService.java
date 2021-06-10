@@ -1,19 +1,16 @@
 package com.javatraining.moksiakova.service;
 
-import com.javatraining.moksiakova.CustomResponse;
-import com.javatraining.moksiakova.domain.entity.Customer;
-
-import java.util.List;
+import com.javatraining.moksiakova.dto.CustomerDTO;
 
 public interface CustomerService {
 
-    CustomResponse<Customer> findCustomer(int customerId);
+    CustomerDTO findById(Integer customerId);
 
-    CustomResponse<List<Customer>> findAll();
+    /**Collection<CustomerDTO> findAll();
 
-    CustomResponse<Customer> createCustomer(Customer customer);
+    CustomerDTO createCustomer(Customer customer);
 
-    CustomResponse<Customer> updateCustomer(Customer customer);
+    CustomerDTO updateCustomer(Customer customer);
 
-    CustomResponse<Customer> deleteCustomer(int customerId);
+    CustomerDTO deleteCustomer(int customerId);*/
 }

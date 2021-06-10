@@ -35,10 +35,10 @@
         <gson.version>2.8.1</gson.version>
         <spring.version>5.2.6.RELEASE</spring.version>
         <spring.data.version>2.2.7.RELEASE</spring.data.version>
+        <jackson.version>2.9.6</jackson.version>
     </properties>
 
     <build>
-        <finalName>moksiakova</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -92,19 +92,22 @@
                 </executions>
             </plugin>
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
-                <failOnMissingWebXml>false</failOnMissingWebXml>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.2</version>
-        </plugin>
-
+                    <path>/moksiakova</path>
+                    <port>8080</port>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -119,6 +122,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.javatraining</groupId>
+                <artifactId>javatraining-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -168,9 +176,33 @@
                 <version>${hibernate.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.version}</version>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.200</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- Для маппинга в JSON -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- JSR 349 -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>

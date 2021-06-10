@@ -24,13 +24,13 @@ public class Main implements WebApplicationInitializer {
         // Создаём контекст для dispatcher servlet'а
         AnnotationConfigWebApplicationContext dispatcherContext =
                 new AnnotationConfigWebApplicationContext();
-        dispatcherContext.scan("com.epam.rd");
+        dispatcherContext.scan("com.javatraining.moksiakova");
 
         // Регистрируем dispatcher servlet
         ServletRegistration.Dynamic dispatcher =
                 servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/*");
+        dispatcher.addMapping("/");
 
         log.info("Application is running");
     }

@@ -1,6 +1,8 @@
 package com.javatraining.moksiakova.domain.entity;
 
 import com.google.gson.annotations.Expose;
+import com.javatraining.moksiakova.dto.CustomerDTO;
+import com.javatraining.moksiakova.dto.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,4 +47,13 @@ public class Customer {
     @ToString.Exclude
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> customerOrders = new ArrayList<>();
+
+    public CustomerDTO convertToDTO() {
+
+        return CustomerDTO.builder()
+                .customerId(customerId)
+                .customerName(customerName)
+                .build();
+
+    }
 }

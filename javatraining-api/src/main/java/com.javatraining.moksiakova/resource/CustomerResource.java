@@ -3,7 +3,7 @@ package com.javatraining.moksiakova.resource;
 import com.javatraining.moksiakova.dto.CustomerDTO;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/customers")
+@RequestMapping(value = "/")
 public interface CustomerResource {
 
     @GetMapping("/{id}")
