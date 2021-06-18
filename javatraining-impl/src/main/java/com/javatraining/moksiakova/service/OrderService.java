@@ -1,13 +1,18 @@
 package com.javatraining.moksiakova.service;
 
+import com.javatraining.moksiakova.dto.OrderDTO;
+
+import java.util.Collection;
+
 public interface OrderService {
-    /**CustomResponse<Order> findOrder(int orderId);
 
-    CustomResponse<List<Order>> findAll();
+    OrderDTO findById(Integer orderId);
 
-    CustomResponse<Order> createOrder(OrderPayload order);
+    Collection<OrderDTO> findAll();
 
-    CustomResponse<Order> updateOrder(OrderPayload order);
+    OrderDTO createOrder(OrderDTO order);
 
-    CustomResponse<Order> deleteOrder(int orderId);*/
+    OrderDTO updateOrder(OrderDTO order);
+
+    void deleteOrder(Integer orderId);
 }

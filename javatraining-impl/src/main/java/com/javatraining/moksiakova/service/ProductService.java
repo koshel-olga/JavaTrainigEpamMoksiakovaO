@@ -1,15 +1,16 @@
 package com.javatraining.moksiakova.service;
 
+import com.javatraining.moksiakova.dto.ProductDTO;
+
 public interface ProductService {
-    /**
-    CustomResponse<Product> findProduct(int productId);
 
-    CustomResponse<List<Product>> findAll();
+    ProductDTO findById(Integer productId);
 
-    CustomResponse<Product> createProduct(Product product);
+    //Collection<ProductDTO> findAll();
 
-    CustomResponse<Product> updateProduct(Product product);
+    ProductDTO createProduct(ProductDTO product);
 
-    CustomResponse<Product> deleteProduct(int productId);
-     */
+    ProductDTO updateProduct(ProductDTO product);
+
+    void deleteProduct(Integer productId);
 }

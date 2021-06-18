@@ -1,4 +1,4 @@
-package com.javatraining.moksiakova.converter.impl;
+package com.javatraining.moksiakova.converter;
 
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.dto.CustomerDTO;

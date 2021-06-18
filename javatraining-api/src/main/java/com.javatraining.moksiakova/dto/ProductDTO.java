@@ -8,10 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 @Component
 @Data
 @NoArgsConstructor
@@ -19,18 +15,15 @@ import java.util.Set;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderDTO {
+public class ProductDTO {
 
-    private Integer orderId;
+    private Integer productId;
 
-    private String orderNumber;
+    private Boolean isDiscontinued;
 
-    private Integer customerId;
+    private String productName;
 
-    private Date orderDate;
+    private Double unitPrice;
 
-    private double totalAmount;
-
-    private Set<Integer> products = new HashSet<>();
-
+    private Integer supplierId;
 }

@@ -1,15 +1,26 @@
 package com.javatraining.moksiakova.domain.entity;
 
-import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Entity class for table order.
@@ -27,14 +38,12 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id", columnDefinition = "serial")
-    @Expose
-    private int orderId;
+    private Integer orderId;
 
     /**
      * Order number.
      */
     @Column(name="order_number")
-    @Expose
     private String orderNumber;
 
     /**
@@ -43,21 +52,18 @@ public class Order {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @Expose
     private Customer customer;
 
     /**
      * Order date.
      */
     @Column(name="order_date")
-    @Expose
     private Timestamp orderDate;
 
     /**
      * Price order.
      */
     @Column(name="total_amount")
-    @Expose
     private double totalAmount;
 
     /**
@@ -71,4 +77,8 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name ="product_id",referencedColumnName = "product_id")
     )
     private List<Product> products = new ArrayList<>();
+
+    public Set<Integer> getOrderProducts() {
+        return products.stream().map(Product::getProductId).collect(Collectors.toSet());
+    }
 }

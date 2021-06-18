@@ -1,15 +1,16 @@
 package com.javatraining.moksiakova.service;
 
+import com.javatraining.moksiakova.dto.SupplierDTO;
+
 public interface SupplierService {
-    /**
-    public CustomResponse<Supplier> findSupplier(int supplierId);
 
-    public CustomResponse<List<Supplier>> findAll();
+    SupplierDTO findSupplier(Integer supplierId);
 
-    public CustomResponse<Supplier> createSupplier(Supplier supplier);
+    //List<SupplierDTO> findAll();
 
-    public CustomResponse<Supplier> updateSupplier(Supplier supplier);
+    SupplierDTO createSupplier(SupplierDTO supplier);
 
-    public CustomResponse<Supplier> deleteSupplier(int supplierId);
-     */
+    SupplierDTO updateSupplier(SupplierDTO supplier);
+
+    void deleteSupplier(Integer supplierId);
 }

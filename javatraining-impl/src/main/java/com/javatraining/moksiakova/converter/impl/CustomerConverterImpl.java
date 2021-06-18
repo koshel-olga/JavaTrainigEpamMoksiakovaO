@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.converter.impl;
 
+import com.javatraining.moksiakova.converter.CustomerConverter;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.dto.CustomerDTO;
 import org.springframework.stereotype.Component;
