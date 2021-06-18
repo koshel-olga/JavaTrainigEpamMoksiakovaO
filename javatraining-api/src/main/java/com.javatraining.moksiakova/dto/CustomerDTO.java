@@ -1,5 +1,7 @@
 package com.javatraining.moksiakova.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerDTO {
 
     private int customerId;
@@ -25,6 +29,5 @@ public class CustomerDTO {
 
     private String phone;
 
-    private Set<OrderDTO> customerOrders = new HashSet<>();
-
+    private Set<Integer> customerOrders = new HashSet<>();
 }

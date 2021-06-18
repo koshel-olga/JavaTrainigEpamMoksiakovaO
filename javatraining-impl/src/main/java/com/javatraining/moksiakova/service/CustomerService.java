@@ -2,15 +2,17 @@ package com.javatraining.moksiakova.service;
 
 import com.javatraining.moksiakova.dto.CustomerDTO;
 
+import java.util.Collection;
+
 public interface CustomerService {
 
     CustomerDTO findById(Integer customerId);
 
-    /**Collection<CustomerDTO> findAll();
+    Collection<CustomerDTO> findAll();
 
-    CustomerDTO createCustomer(Customer customer);
+    CustomerDTO createCustomer(CustomerDTO customer);
 
-    CustomerDTO updateCustomer(Customer customer);
+    CustomerDTO updateCustomer(CustomerDTO customer);
 
-    CustomerDTO deleteCustomer(int customerId);*/
+    void deleteCustomer(Integer customerId);
 }
