@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 @Data
 @NoArgsConstructor
@@ -22,4 +25,6 @@ public class SupplierDTO {
     private String companyName;
 
     private String phone;
+
+    private Set<Integer> products = new HashSet<>();
 }

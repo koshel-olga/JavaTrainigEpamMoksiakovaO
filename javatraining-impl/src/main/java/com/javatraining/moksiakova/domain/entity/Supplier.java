@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Entity class for table supplier.
@@ -45,4 +47,10 @@ public class Supplier {
 
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
+
+    public Set<Integer> getProductsIds() {
+        return products.stream()
+        .map(Product::getProductId)
+        .collect(Collectors.toSet());
+    }
 }
