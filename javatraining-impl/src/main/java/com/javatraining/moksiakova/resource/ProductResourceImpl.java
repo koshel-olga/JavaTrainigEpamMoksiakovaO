@@ -1,8 +1,11 @@
 package com.javatraining.moksiakova.resource;
 
+import com.javatraining.moksiakova.dto.OrderDTO;
 import com.javatraining.moksiakova.dto.ProductDTO;
 import com.javatraining.moksiakova.service.ProductService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public class ProductResourceImpl implements ProductResource {
@@ -12,6 +15,12 @@ public class ProductResourceImpl implements ProductResource {
     @Override
     public ProductDTO findProduct(Integer id) {
         return productService.findById(id);
+    }
+
+    @Override
+    public Collection<ProductDTO> findAllProduct() {
+        Collection<ProductDTO> products = productService.findAll();
+        return products;
     }
 
     @Override

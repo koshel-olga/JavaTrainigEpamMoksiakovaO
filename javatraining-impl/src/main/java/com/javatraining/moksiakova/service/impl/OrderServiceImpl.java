@@ -3,6 +3,7 @@ package com.javatraining.moksiakova.service.impl;
 import com.javatraining.moksiakova.converter.OrderConverter;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.domain.entity.Order;
+import com.javatraining.moksiakova.dto.CustomerDTO;
 import com.javatraining.moksiakova.dto.OrderDTO;
 import com.javatraining.moksiakova.repositories.OrderRepository;
 import com.javatraining.moksiakova.service.OrderService;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,8 +37,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public Collection<OrderDTO> findAll() {
-        return null;
+        Collection<Order> orders = orderRepository.findAll();
+        Collection<OrderDTO> ordersDTO = orders.stream()
+                .map(orderConverter::convertToDto)
+                .collect(Collectors.toSet());
+        return ordersDTO;
     }
 
     @Override

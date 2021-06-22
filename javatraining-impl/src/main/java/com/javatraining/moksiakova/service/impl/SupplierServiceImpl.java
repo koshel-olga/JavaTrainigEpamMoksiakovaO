@@ -4,14 +4,19 @@ import com.javatraining.moksiakova.converter.SupplierConverter;
 import com.javatraining.moksiakova.domain.entity.Order;
 import com.javatraining.moksiakova.domain.entity.Product;
 import com.javatraining.moksiakova.domain.entity.Supplier;
+import com.javatraining.moksiakova.dto.ProductDTO;
 import com.javatraining.moksiakova.dto.SupplierDTO;
 import com.javatraining.moksiakova.repositories.SupplierRepository;
 import com.javatraining.moksiakova.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -28,7 +33,16 @@ public class SupplierServiceImpl implements SupplierService {
             return supplierConverter.convertToDto(supplierOptional.get());
         }
         throw new EntityNotFoundException(String.format("Not found Supplier with Id: %d", supplierId));
+    }
 
+    @Override
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    public Collection<SupplierDTO> findAll() {
+        Collection<Supplier> suppliers = supplierRepository.findAll();
+        Collection<SupplierDTO> suppliersDTO = suppliers.stream()
+                .map(supplierConverter::convertToDto)
+                .collect(Collectors.toSet());
+        return suppliersDTO;
     }
 
     @Override

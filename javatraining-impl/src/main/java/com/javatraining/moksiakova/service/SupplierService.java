@@ -2,11 +2,13 @@ package com.javatraining.moksiakova.service;
 
 import com.javatraining.moksiakova.dto.SupplierDTO;
 
+import java.util.Collection;
+
 public interface SupplierService {
 
     SupplierDTO findSupplier(Integer supplierId);
 
-    //List<SupplierDTO> findAll();
+    Collection<SupplierDTO> findAll();
 
     SupplierDTO createSupplier(SupplierDTO supplier);
 

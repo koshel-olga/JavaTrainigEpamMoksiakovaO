@@ -1,5 +1,6 @@
 package com.javatraining.moksiakova.resource;
 
+import com.javatraining.moksiakova.dto.CustomerDTO;
 import com.javatraining.moksiakova.dto.ProductDTO;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +10,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collection;
+
 @RequestMapping(value = "/products")
 public interface ProductResource {
     @GetMapping("/{id}")
     ProductDTO findProduct(@PathVariable Integer id);
+
+    @GetMapping
+    Collection<ProductDTO> findAllProduct();
 
     @PostMapping
     ProductDTO createProduct(@RequestBody ProductDTO order);

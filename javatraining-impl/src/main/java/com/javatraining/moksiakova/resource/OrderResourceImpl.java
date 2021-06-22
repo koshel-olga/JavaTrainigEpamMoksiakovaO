@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 /**
  *
  */
@@ -22,6 +24,12 @@ public class OrderResourceImpl implements OrderResource {
     public OrderDTO findOrder(Integer id) {
         OrderDTO order = orderService.findById(id);
         return order;
+    }
+
+    @Override
+    public Collection<OrderDTO> findAllOrder() {
+        Collection<OrderDTO> orders = orderService.findAll();
+        return orders;
     }
 
     @Override
