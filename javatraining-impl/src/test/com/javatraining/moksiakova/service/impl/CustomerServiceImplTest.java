@@ -61,21 +61,25 @@ class CustomerServiceImplTest {
 
     @Test
     void findAll() {
+
     }
 
     @Test
     void createCustomer() {
-        var id = 1;
-        var customer = new Customer();
-        customer.setCustomerId(id);
-        var expectedResult = new CustomerDTO();
-        expectedResult.setCustomerId(id);
+        var id = 21;
+        var customerDto = new CustomerDTO();
+        customerDto.setCustomerId(id);
+        customerDto.setCustomerName("test");
+        var customerEntity = new Customer();
+        customerEntity.setCustomerId(customerDto.getCustomerId());
+        customerEntity.setCustomerName(customerDto.getCustomerName());
 
-        when(this.customerRepository.findById(id)).thenReturn(Optional.of(customer));
-        when(this.customerConverter.convertToDto(customer)).thenReturn(expectedResult);
+        when(this.customerConverter.convertToEntity(customerDto)).thenReturn(customerEntity);
+        when(this.customerRepository.save(customerEntity)).thenReturn(customerEntity);
+        when(this.customerConverter.convertToDto(customerEntity)).thenReturn(customerDto);
 
-        var actualResult = this.service.findById(id);
-        assertEquals(actualResult, expectedResult);
+        var actualResult = this.service.createCustomer(customerDto);
+        assertEquals(actualResult, customerEntity);
     }
 
     @Test
