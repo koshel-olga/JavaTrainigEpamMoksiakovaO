@@ -1,22 +1,22 @@
 package com.javatraining.moksiakova.service.impl;
 
+import com.javatraining.moksiakova.HardCodeObjects;
 import com.javatraining.moksiakova.converter.CustomerConverter;
 import com.javatraining.moksiakova.domain.entity.Customer;
 import com.javatraining.moksiakova.dto.CustomerDTO;
 import com.javatraining.moksiakova.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class CustomerServiceImplTest {
@@ -38,10 +38,8 @@ class CustomerServiceImplTest {
     @Test
     void findById() {
         var id = 1;
-        var customer = new Customer();
-        customer.setCustomerId(id);
-        var expectedResult = new CustomerDTO();
-        expectedResult.setCustomerId(id);
+        var customer = HardCodeObjects.createCustomerEntity();
+        var expectedResult = HardCodeObjects.createCustomerDTO();
 
         when(this.customerRepository.findById(id)).thenReturn(Optional.of(customer));
         when(this.customerConverter.convertToDto(customer)).thenReturn(expectedResult);
@@ -60,33 +58,39 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void findAll() {
-
-    }
-
-    @Test
     void createCustomer() {
-        var id = 21;
-        var customerDto = new CustomerDTO();
-        customerDto.setCustomerId(id);
-        customerDto.setCustomerName("test");
-        var customerEntity = new Customer();
-        customerEntity.setCustomerId(customerDto.getCustomerId());
-        customerEntity.setCustomerName(customerDto.getCustomerName());
+        var customerDto = HardCodeObjects.createCustomerDTO();
+        var customerEntityWithoutId = HardCodeObjects.createCustomerEntity();
+        customerEntityWithoutId.setCustomerId(null);
 
-        when(this.customerConverter.convertToEntity(customerDto)).thenReturn(customerEntity);
-        when(this.customerRepository.save(customerEntity)).thenReturn(customerEntity);
-        when(this.customerConverter.convertToDto(customerEntity)).thenReturn(customerDto);
+        when(this.customerConverter.convertToEntity(customerDto)).thenReturn(customerEntityWithoutId);
+        when(this.customerConverter.convertToDto(customerEntityWithoutId)).thenReturn(customerDto);
 
         var actualResult = this.service.createCustomer(customerDto);
-        assertEquals(actualResult, customerEntity);
+        assertEquals(customerDto, actualResult);
+
+        verify(customerRepository).save(customerEntityWithoutId);
     }
 
     @Test
     void updateCustomer() {
+        var customerDto = HardCodeObjects.createCustomerDTO();
+        var customerEntity = HardCodeObjects.createCustomerEntity();
+
+        when(this.customerConverter.convertToEntity(customerDto)).thenReturn(customerEntity);
+        when(this.customerConverter.convertToDto(customerEntity)).thenReturn(customerDto);
+
+        var actualResult = this.service.createCustomer(customerDto);
+        assertEquals(customerDto, actualResult);
+
+        verify(customerRepository).save(customerEntity);
     }
 
     @Test
     void deleteCustomer() {
+        var id = 3;
+        this.service.deleteCustomer(id);
+
+        verify(customerRepository).deleteById(id);
     }
 }

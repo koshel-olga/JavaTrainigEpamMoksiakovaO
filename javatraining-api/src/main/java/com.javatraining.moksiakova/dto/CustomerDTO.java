@@ -23,7 +23,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerDTO {
 
-    private int customerId;
+    private Integer customerId;
 
     private String customerName;
 
